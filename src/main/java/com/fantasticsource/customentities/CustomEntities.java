@@ -1,7 +1,6 @@
 package com.fantasticsource.customentities;
 
-import net.minecraft.entity.EntityList;
-import net.minecraft.util.ResourceLocation;
+import com.fantasticsource.mctools.WorldEventDistributor;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
@@ -13,7 +12,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 
-@Mod(modid = CustomEntities.MODID, name = CustomEntities.NAME, version = CustomEntities.VERSION, dependencies = "required-after:fantasticlib@[1.12.2.021,)")
+@Mod(modid = CustomEntities.MODID, name = CustomEntities.NAME, version = CustomEntities.VERSION, dependencies = "required-after:fantasticlib@[1.12.2.021a,)")
 public class CustomEntities
 {
     public static final String MODID = "customentities";
@@ -24,6 +23,7 @@ public class CustomEntities
     public static void preInit(FMLPreInitializationEvent event)
     {
         MinecraftForge.EVENT_BUS.register(CustomEntities.class);
+        MinecraftForge.EVENT_BUS.register(WorldEventDistributor.class);
     }
 
     @SubscribeEvent
@@ -36,9 +36,18 @@ public class CustomEntities
     public static void registerEntity(RegistryEvent.Register<EntityEntry> event)
     {
         String name = MODID + ":living";
-        EntityEntry entry = new EntityEntry(CustomLivingEntity.class, name);
-        entry.setRegistryName(name);
-        entry.setEgg(new EntityList.EntityEggInfo(new ResourceLocation(name), 0, 0xFFFFFFFF));
-        event.getRegistry().register(entry);
+        event.getRegistry().register(new EntityEntry(CustomLivingEntity.class, name).setRegistryName(name));
+    }
+
+    @SubscribeEvent
+    public static void joinWorld(EntityJoinWorldEvent event)
+    {
+        if (event.getEntity() instanceof CustomLivingEntity) System.out.println("Joined");
+    }
+
+    @SubscribeEvent
+    public static void death(WorldEventDistributor.DEntityRemovedEvent event)
+    {
+        if (event.getEntity() instanceof CustomLivingEntity) System.out.println("Removed");
     }
 }
