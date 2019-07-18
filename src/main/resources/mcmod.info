@@ -1,0 +1,16 @@
+[
+{
+  "modid": "customentities",
+  "name": "Custom Entities",
+  "description": "Create custom entities in-game for any and all purposes",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Laike_Endaril"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
