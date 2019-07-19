@@ -22,13 +22,9 @@ public class CustomLivingEntity extends EntityLiving
         {
             for (Entity felt : world.getEntitiesWithinAABBExcludingEntity(this, getEntityBoundingBox()))
             {
-                System.out.println(getName() + " collided with " + felt.getName());
+//                System.out.println(getName() + " collided with " + felt.getName());
             }
         }
-
-        System.out.println("Entity box: " + getEntityBoundingBox());
-        System.out.println("Collision box: : " + getEntityBoundingBox());
-        System.out.println("Render box: " + getRenderBoundingBox());
     }
 
     @Override

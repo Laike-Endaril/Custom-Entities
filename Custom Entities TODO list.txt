@@ -1,0 +1,6 @@
+
+
+
+Notes:
+getCollisionBoundingBox() returns the entity's *solid* collision bounding box; it's generally not used for living entities, but rather for eg. boats
+getEntityBoundingBox() returns the normal collision bounding box generally used for living entities

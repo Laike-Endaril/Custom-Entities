@@ -1,11 +1,10 @@
 package com.fantasticsource.customentities;
 
-import com.fantasticsource.mctools.WorldEventDistributor;
+import com.fantasticsource.customentities.blocksanditems.BlocksAndItems;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -23,7 +22,7 @@ public class CustomEntities
     public static void preInit(FMLPreInitializationEvent event)
     {
         MinecraftForge.EVENT_BUS.register(CustomEntities.class);
-        MinecraftForge.EVENT_BUS.register(WorldEventDistributor.class);
+        MinecraftForge.EVENT_BUS.register(BlocksAndItems.class);
     }
 
     @SubscribeEvent
@@ -37,17 +36,5 @@ public class CustomEntities
     {
         String name = MODID + ":living";
         event.getRegistry().register(new EntityEntry(CustomLivingEntity.class, name).setRegistryName(name));
-    }
-
-    @SubscribeEvent
-    public static void joinWorld(EntityJoinWorldEvent event)
-    {
-        if (event.getEntity() instanceof CustomLivingEntity) System.out.println("Joined");
-    }
-
-    @SubscribeEvent
-    public static void death(WorldEventDistributor.DEntityRemovedEvent event)
-    {
-        if (event.getEntity() instanceof CustomLivingEntity) System.out.println("Removed");
     }
 }
