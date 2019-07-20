@@ -7,6 +7,8 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -22,14 +24,17 @@ public class Network
     public static void init()
     {
         WRAPPER.registerMessage(OpenLivingEntityGUIPacketHandler.class, OpenLivingEntityGUIPacket.class, discriminator++, Side.CLIENT);
+        WRAPPER.registerMessage(CreateLivingEntityPacketHandler.class, CreateLivingEntityPacket.class, discriminator++, Side.SERVER);
     }
 
 
     public static class OpenLivingEntityGUIPacket implements IMessage
     {
+        public int homeDimension;
+        public Vec3d homePos, homeLookPos;
+
         public float maxHP;
 
-        public Vec3d homePos, homeLookPos;
 
         public OpenLivingEntityGUIPacket()
         {
@@ -99,24 +104,25 @@ public class Network
         @Override
         public void toBytes(ByteBuf buf)
         {
-            buf.writeFloat(maxHP);
-
+            buf.writeInt(homeDimension);
             buf.writeDouble(homePos.x);
             buf.writeDouble(homePos.y);
             buf.writeDouble(homePos.z);
-
             buf.writeDouble(homeLookPos.x);
             buf.writeDouble(homeLookPos.y);
             buf.writeDouble(homeLookPos.z);
+
+            buf.writeFloat(maxHP);
         }
 
         @Override
         public void fromBytes(ByteBuf buf)
         {
-            maxHP = buf.readFloat();
-
+            homeDimension = buf.readInt();
             homePos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
             homeLookPos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
+
+            maxHP = buf.readFloat();
         }
     }
 
@@ -127,6 +133,59 @@ public class Network
         public IMessage onMessage(OpenLivingEntityGUIPacket packet, MessageContext ctx)
         {
             Minecraft.getMinecraft().addScheduledTask(() -> LivingEntityGUI.show(packet));
+            return null;
+        }
+    }
+
+
+    public static class CreateLivingEntityPacket implements IMessage
+    {
+        public float maxHP;
+
+        int homeDimension;
+        public Vec3d homePos, homeLookPos;
+
+        public CreateLivingEntityPacket()
+        {
+            //Required
+        }
+
+        public CreateLivingEntityPacket(LivingEntityGUI gui)
+        {
+        }
+
+        @Override
+        public void toBytes(ByteBuf buf)
+        {
+            buf.writeInt(homeDimension);
+            buf.writeDouble(homePos.x);
+            buf.writeDouble(homePos.y);
+            buf.writeDouble(homePos.z);
+            buf.writeDouble(homeLookPos.x);
+            buf.writeDouble(homeLookPos.y);
+            buf.writeDouble(homeLookPos.z);
+
+            buf.writeFloat(maxHP);
+        }
+
+        @Override
+        public void fromBytes(ByteBuf buf)
+        {
+            homeDimension = buf.readInt();
+            homePos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
+            homeLookPos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
+
+            maxHP = buf.readFloat();
+        }
+    }
+
+    public static class CreateLivingEntityPacketHandler implements IMessageHandler<CreateLivingEntityPacket, IMessage>
+    {
+        @Override
+        @SideOnly(Side.CLIENT)
+        public IMessage onMessage(CreateLivingEntityPacket packet, MessageContext ctx)
+        {
+            FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> DimensionManager.getWorld(packet.homeDimension).spawnEntity(new CustomLivingEntity(packet)));
             return null;
         }
     }

@@ -8,6 +8,7 @@ public class LivingEntityGUI extends GUIScreen
 {
     private static final LivingEntityGUI GUI = new LivingEntityGUI();
 
+
     public static void show(Network.OpenLivingEntityGUIPacket packet)
     {
         Minecraft.getMinecraft().displayGuiScreen(GUI);

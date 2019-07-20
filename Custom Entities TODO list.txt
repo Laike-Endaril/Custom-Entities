@@ -1,6 +1,13 @@
+Look into animations
+
 
 
 
 Notes:
 getCollisionBoundingBox() returns the entity's *solid* collision bounding box; it's generally not used for living entities, but rather for eg. boats
 getEntityBoundingBox() returns the normal collision bounding box generally used for living entities
+
+
+
+Low priority:
+Look into multiple hitboxes if a situation comes up where they'd be useful

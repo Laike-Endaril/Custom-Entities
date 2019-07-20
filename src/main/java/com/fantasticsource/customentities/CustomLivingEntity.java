@@ -2,23 +2,44 @@ package com.fantasticsource.customentities;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 
 public class CustomLivingEntity extends EntityLiving
 {
     public static final float DEFAULT_WIDTH = 0.6f, DEFAULT_HEIGHT = 1.8f, DEFAULT_EYE_HEIGHT = DEFAULT_HEIGHT * 0.85F;
 
-    public boolean hasHealth = false;
-
+    public int homeDimension;
     public Vec3d homePosition, homeLookPos;
+    float eyeHeight;
 
-    public CustomLivingEntity(World worldIn)
+    public CustomLivingEntity(Network.CreateLivingEntityPacket packet)
     {
-        super(worldIn);
+        super(DimensionManager.getWorld(packet.homeDimension));
+
+
+        homeDimension = world.provider.getDimension();
+        homePosition = packet.homePos;
+        homeLookPos = packet.homeLookPos;
 
         width = DEFAULT_WIDTH;
         height = DEFAULT_HEIGHT;
+
+
+        double d0 = homeLookPos.x - homePosition.x;
+        double d1 = homeLookPos.y - (homePosition.y + eyeHeight);
+        double d2 = homeLookPos.z - homePosition.z;
+        double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
+        float yaw = (float) (MathHelper.atan2(d2, d0) * (180D / Math.PI)) - 90.0F;
+        float pitch = (float) (-(MathHelper.atan2(d1, d3) * (180D / Math.PI)));
+        setLocationAndAngles(homePosition.x, homePosition.y, homePosition.z, yaw, pitch);
+    }
+
+    @Override
+    public float getEyeHeight()
+    {
+        return eyeHeight;
     }
 
     @Override
@@ -33,12 +54,5 @@ public class CustomLivingEntity extends EntityLiving
 //                System.out.println(getName() + " collided with " + felt.getName());
             }
         }
-    }
-
-    @Override
-    public boolean isEntityAlive()
-    {
-        if (hasHealth) return super.isEntityAlive();
-        return !isDead;
     }
 }
