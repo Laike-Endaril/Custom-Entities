@@ -1,5 +1,5 @@
 itemGroup.customentities=Custom Entities
 
-item.customentities:entityeditor.name=Entity Editor
+item.customentities:livingentityeditor.name=Living Entity Editor
 
 entity.customentities:living.name=Custom Living Entity

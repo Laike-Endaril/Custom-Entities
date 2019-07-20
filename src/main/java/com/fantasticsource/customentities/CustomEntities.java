@@ -1,6 +1,7 @@
 package com.fantasticsource.customentities;
 
 import com.fantasticsource.customentities.blocksanditems.BlocksAndItems;
+import com.fantasticsource.customentities.blocksanditems.items.ItemLivingEntityEditor;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
@@ -23,6 +24,9 @@ public class CustomEntities
     {
         MinecraftForge.EVENT_BUS.register(CustomEntities.class);
         MinecraftForge.EVENT_BUS.register(BlocksAndItems.class);
+        MinecraftForge.EVENT_BUS.register(ItemLivingEntityEditor.class);
+
+        Network.init();
     }
 
     @SubscribeEvent
