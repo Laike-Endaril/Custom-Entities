@@ -141,9 +141,8 @@ public class Network
     public static class CreateLivingEntityPacket implements IMessage
     {
         public float maxHP;
-
-        int homeDimension;
         public Vec3d homePos, homeLookPos;
+        int homeDimension;
 
         public CreateLivingEntityPacket()
         {

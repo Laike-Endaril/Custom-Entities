@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
 public class CustomLivingEntity extends EntityLiving
@@ -13,6 +14,12 @@ public class CustomLivingEntity extends EntityLiving
     public int homeDimension;
     public Vec3d homePosition, homeLookPos;
     float eyeHeight;
+
+    public CustomLivingEntity(World world)
+    {
+        //Required
+        super(world);
+    }
 
     public CustomLivingEntity(Network.CreateLivingEntityPacket packet)
     {
