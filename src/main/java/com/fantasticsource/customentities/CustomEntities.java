@@ -7,6 +7,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -42,5 +43,19 @@ public class CustomEntities
     {
         String name = MODID + ":living";
         event.getRegistry().register(new EntityEntry(CustomLivingEntity.class, name).setRegistryName(name));
+    }
+
+    @SubscribeEvent
+    public static void test(EntityJoinWorldEvent event)
+    {
+        if (event.getEntity() instanceof CustomLivingEntity)
+        {
+            CustomLivingEntity custom = (CustomLivingEntity) event.getEntity();
+            System.out.println(custom.homeDimension + ", " + custom.dimension);
+            System.out.println(custom.homePos + ", " + custom.getPositionVector());
+            System.out.println(custom.homeLookPos.subtract(custom.homePos) + ", " + custom.getLookVec());
+
+            System.out.println(custom.getHealth() + " / " + custom.getMaxHealth());
+        }
     }
 }

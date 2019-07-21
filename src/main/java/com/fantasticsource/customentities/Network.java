@@ -48,7 +48,7 @@ public class Network
             if (living instanceof CustomLivingEntity)
             {
                 CustomLivingEntity custom = (CustomLivingEntity) living;
-                homePos = custom.homePosition;
+                homePos = custom.homePos;
                 homeLookPos = custom.homeLookPos;
             }
             else if (living instanceof EntityCreature)
@@ -140,17 +140,23 @@ public class Network
 
     public static class CreateLivingEntityPacket implements IMessage
     {
-        public float maxHP;
-        public Vec3d homePos, homeLookPos;
         int homeDimension;
+        Vec3d homePos, homeLookPos;
+
+        float maxHP;
 
         public CreateLivingEntityPacket()
         {
             //Required
         }
 
-        public CreateLivingEntityPacket(LivingEntityGUI gui)
+        public CreateLivingEntityPacket(boolean dummyBool)
         {
+            homeDimension = LivingEntityGUI.homeDimension;
+            homePos = LivingEntityGUI.homePos;
+            homeLookPos = LivingEntityGUI.homeLookPos;
+
+            maxHP = LivingEntityGUI.maxHP;
         }
 
         @Override

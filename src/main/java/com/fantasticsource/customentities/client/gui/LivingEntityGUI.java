@@ -8,6 +8,7 @@ import com.fantasticsource.mctools.gui.guielements.rect.GUITextRect;
 import com.fantasticsource.mctools.gui.guielements.rect.GradientRect;
 import com.fantasticsource.tools.datastructures.Color;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class LivingEntityGUI extends GUIScreen
@@ -22,8 +23,20 @@ public class LivingEntityGUI extends GUIScreen
     private static GUIElement createElement;
 
 
+    public static int homeDimension;
+    public static Vec3d homePos, homeLookPos;
+
+    public static float maxHP;
+
+
     public static void show(Network.OpenLivingEntityGUIPacket packet)
     {
+        homeDimension = packet.homeDimension;
+        homePos = packet.homePos;
+        homeLookPos = packet.homeLookPos;
+
+        maxHP = packet.maxHP;
+
         Minecraft.getMinecraft().displayGuiScreen(GUI);
     }
 
@@ -33,7 +46,7 @@ public class LivingEntityGUI extends GUIScreen
         if (event.getElement() == createElement)
         {
             Minecraft.getMinecraft().player.closeScreen();
-            Network.WRAPPER.sendToServer(new Network.CreateLivingEntityPacket(GUI));
+            Network.WRAPPER.sendToServer(new Network.CreateLivingEntityPacket(true));
         }
     }
 
