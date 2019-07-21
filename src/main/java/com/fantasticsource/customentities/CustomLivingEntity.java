@@ -2,6 +2,7 @@ package com.fantasticsource.customentities;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -61,5 +62,35 @@ public class CustomLivingEntity extends EntityLiving
 //                System.out.println(getName() + " collided with " + felt.getName());
             }
         }
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound)
+    {
+        compound = super.writeToNBT(compound);
+
+        compound.setInteger("homeDimension", homeDimension);
+        compound.setDouble("homeX", homePos.x);
+        compound.setDouble("homeY", homePos.y);
+        compound.setDouble("homeZ", homePos.z);
+        compound.setDouble("homeLookX", homeLookPos.x);
+        compound.setDouble("homeLookY", homeLookPos.y);
+        compound.setDouble("homeLookZ", homeLookPos.z);
+
+        compound.setFloat("eyeHeight", eyeHeight);
+
+        return compound;
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound)
+    {
+        super.readFromNBT(compound);
+
+        homeDimension = compound.getInteger("homeDimension");
+        homePos = new Vec3d(compound.getDouble("homeX"), compound.getDouble("homeY"), compound.getDouble("homeZ"));
+        homeLookPos = new Vec3d(compound.getDouble("homeLookX"), compound.getDouble("homeLookY"), compound.getDouble("homeLookZ"));
+
+        eyeHeight = compound.getFloat("eyeHeight");
     }
 }

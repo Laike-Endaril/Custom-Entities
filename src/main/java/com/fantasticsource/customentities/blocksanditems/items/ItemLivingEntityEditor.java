@@ -84,7 +84,7 @@ public class ItemLivingEntityEditor extends Item
         if (Tools.posMod(vec.z, 1) == 0 && player.posZ < vec.z) pos = pos.north();
 
         //If we clicked on the bottom of a block, shift y position down to where the "top" of the entity is touching the bottom of the block
-        Vec3d vec2 = new Vec3d(pos);
+        Vec3d vec2 = new Vec3d(pos).addVector(0.5, 0, 0.5);
         if (Tools.posMod(vec.y, 1) == 0 && player.posY + player.eyeHeight < vec.y) vec2 = vec2.addVector(0, -CustomLivingEntity.DEFAULT_HEIGHT, 0);
 
 
