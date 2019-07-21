@@ -1,3 +1,7 @@
+Define the GUI...
+...Create (no existing entity) / Save (existing entity, custom or not)
+Convert (non-custom entities only; converts to custom entity)
+
 Inheritance system for stats and for other things...
 ...for stats, allow equation
 

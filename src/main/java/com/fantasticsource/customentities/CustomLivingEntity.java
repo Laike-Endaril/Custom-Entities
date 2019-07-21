@@ -45,6 +45,28 @@ public class CustomLivingEntity extends EntityLiving
         setLocationAndAngles(homePos.x, homePos.y, homePos.z, yaw, pitch);
     }
 
+    public static void handlePacket(Network.CreateLivingEntityPacket packet)
+    {
+        World world = DimensionManager.getWorld(packet.homeDimension);
+
+        if (!packet.hasID) world.spawnEntity(new CustomLivingEntity(packet));
+        else
+        {
+            //Edit existing entity
+            Entity entity = world.getEntityByID(packet.entityID);
+
+            if (entity instanceof CustomLivingEntity)
+            {
+                //Already a custom entity; just edit the existing one
+            }
+            else if (entity instanceof EntityLiving)
+            {
+                //Edit existing non-custom living entity, with the option of converting it to a custom entity
+            }
+            else world.spawnEntity(new CustomLivingEntity(packet));
+        }
+    }
+
     @Override
     public float getEyeHeight()
     {

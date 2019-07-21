@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -29,6 +28,9 @@ public class Network
 
     public static class OpenLivingEntityGUIPacket implements IMessage
     {
+        public boolean hasID;
+        public int entityID;
+
         public int homeDimension;
         public Vec3d homePos, homeLookPos;
         public float eyeHeight;
@@ -43,6 +45,9 @@ public class Network
 
         public OpenLivingEntityGUIPacket(EntityLiving living)
         {
+            hasID = true;
+            entityID = living.getEntityId();
+
             homeDimension = living.dimension;
 
             if (living instanceof CustomLivingEntity)
@@ -64,6 +69,8 @@ public class Network
 
         public OpenLivingEntityGUIPacket(EntityPlayerMP player)
         {
+            hasID = false;
+
             homeDimension = player.dimension;
             eyeHeight = CustomLivingEntity.DEFAULT_EYE_HEIGHT;
 
@@ -85,6 +92,8 @@ public class Network
 
         public OpenLivingEntityGUIPacket(Vec3d homePos, EntityPlayerMP player)
         {
+            hasID = false;
+
             homeDimension = player.dimension;
             this.homePos = homePos;
             eyeHeight = CustomLivingEntity.DEFAULT_EYE_HEIGHT;
@@ -108,6 +117,9 @@ public class Network
         @Override
         public void toBytes(ByteBuf buf)
         {
+            buf.writeBoolean(hasID);
+            if (hasID) buf.writeInt(entityID);
+
             buf.writeInt(homeDimension);
             buf.writeDouble(homePos.x);
             buf.writeDouble(homePos.y);
@@ -123,6 +135,9 @@ public class Network
         @Override
         public void fromBytes(ByteBuf buf)
         {
+            hasID = buf.readBoolean();
+            if (hasID) entityID = buf.readInt();
+
             homeDimension = buf.readInt();
             homePos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
             homeLookPos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
@@ -146,6 +161,9 @@ public class Network
 
     public static class CreateLivingEntityPacket implements IMessage
     {
+        public boolean hasID;
+        public int entityID;
+
         public int homeDimension;
         public Vec3d homePos, homeLookPos;
         public float eyeHeight;
@@ -171,6 +189,9 @@ public class Network
         @Override
         public void toBytes(ByteBuf buf)
         {
+            buf.writeBoolean(hasID);
+            if (hasID) buf.writeInt(entityID);
+
             buf.writeInt(homeDimension);
             buf.writeDouble(homePos.x);
             buf.writeDouble(homePos.y);
@@ -186,6 +207,9 @@ public class Network
         @Override
         public void fromBytes(ByteBuf buf)
         {
+            hasID = buf.readBoolean();
+            if (hasID) entityID = buf.readInt();
+
             homeDimension = buf.readInt();
             homePos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
             homeLookPos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
@@ -198,10 +222,9 @@ public class Network
     public static class CreateLivingEntityPacketHandler implements IMessageHandler<CreateLivingEntityPacket, IMessage>
     {
         @Override
-        @SideOnly(Side.CLIENT)
         public IMessage onMessage(CreateLivingEntityPacket packet, MessageContext ctx)
         {
-            FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> DimensionManager.getWorld(packet.homeDimension).spawnEntity(new CustomLivingEntity(packet)));
+            if (ctx.getServerHandler().player.capabilities.isCreativeMode) FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> CustomLivingEntity.handlePacket(packet));
             return null;
         }
     }
