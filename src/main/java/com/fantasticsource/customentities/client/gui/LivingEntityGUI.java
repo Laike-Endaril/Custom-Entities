@@ -19,9 +19,14 @@ public class LivingEntityGUI extends GUIScreen
             FOREGROUND = new Color(0x777777FF),
             MOUSEOVER = new Color(0xAAAAAAFF),
             ACTIVE = new Color(0xFFFFFFFF);
+
     public static int homeDimension;
     public static Vec3d homePos, homeLookPos;
+    public static float eyeHeight;
+
     public static float maxHP;
+
+
     private static GUIElement createElement;
 
     public static void show(Network.OpenLivingEntityGUIPacket packet)
@@ -29,6 +34,7 @@ public class LivingEntityGUI extends GUIScreen
         homeDimension = packet.homeDimension;
         homePos = packet.homePos;
         homeLookPos = packet.homeLookPos;
+        eyeHeight = packet.eyeHeight;
 
         maxHP = packet.maxHP;
 

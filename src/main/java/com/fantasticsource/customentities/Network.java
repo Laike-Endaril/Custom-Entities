@@ -31,6 +31,7 @@ public class Network
     {
         public int homeDimension;
         public Vec3d homePos, homeLookPos;
+        public float eyeHeight;
 
         public float maxHP;
 
@@ -55,6 +56,7 @@ public class Network
                 homePos = new Vec3d(living.getPosition());
                 homeLookPos = homePos.add(living.getLookVec());
             }
+            eyeHeight = living.getEyeHeight();
 
 
             maxHP = living.getMaxHealth();
@@ -62,28 +64,34 @@ public class Network
 
         public OpenLivingEntityGUIPacket(EntityPlayerMP player)
         {
+            homeDimension = player.dimension;
+            eyeHeight = CustomLivingEntity.DEFAULT_EYE_HEIGHT;
+
             maxHP = 20;
 
             if (player.isSneaking())
             {
                 //Create at the player's position, looking the same direction as the player
-                homePos = player.getPositionVector().addVector(0, player.eyeHeight - CustomLivingEntity.DEFAULT_EYE_HEIGHT, 0);
+                homePos = player.getPositionVector().addVector(0, player.eyeHeight - eyeHeight, 0);
                 homeLookPos = homePos.add(player.getLookVec());
             }
             else
             {
                 //Create at a position a little in front of the player, looking into the player's eyes
                 homeLookPos = player.getPositionVector().addVector(0, player.eyeHeight, 0);
-                homePos = homeLookPos.add(player.getLookVec().addVector(0, player.eyeHeight - CustomLivingEntity.DEFAULT_EYE_HEIGHT, 0));
+                homePos = homeLookPos.add(player.getLookVec().addVector(0, player.eyeHeight - eyeHeight, 0));
             }
         }
 
         public OpenLivingEntityGUIPacket(Vec3d homePos, EntityPlayerMP player)
         {
+            homeDimension = player.dimension;
+            this.homePos = homePos;
+            eyeHeight = CustomLivingEntity.DEFAULT_EYE_HEIGHT;
+
             maxHP = 20;
 
             //Create at the clicked position...
-            this.homePos = homePos;
             if (player.isSneaking())
             {
                 //...looking into the player's eyes
@@ -107,6 +115,7 @@ public class Network
             buf.writeDouble(homeLookPos.x);
             buf.writeDouble(homeLookPos.y);
             buf.writeDouble(homeLookPos.z);
+            buf.writeFloat(eyeHeight);
 
             buf.writeFloat(maxHP);
         }
@@ -117,6 +126,7 @@ public class Network
             homeDimension = buf.readInt();
             homePos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
             homeLookPos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
+            eyeHeight = buf.readFloat();
 
             maxHP = buf.readFloat();
         }
@@ -136,10 +146,12 @@ public class Network
 
     public static class CreateLivingEntityPacket implements IMessage
     {
-        int homeDimension;
-        Vec3d homePos, homeLookPos;
+        public int homeDimension;
+        public Vec3d homePos, homeLookPos;
+        public float eyeHeight;
 
-        float maxHP;
+        public float maxHP;
+
 
         public CreateLivingEntityPacket()
         {
@@ -151,6 +163,7 @@ public class Network
             homeDimension = LivingEntityGUI.homeDimension;
             homePos = LivingEntityGUI.homePos;
             homeLookPos = LivingEntityGUI.homeLookPos;
+            eyeHeight = LivingEntityGUI.eyeHeight;
 
             maxHP = LivingEntityGUI.maxHP;
         }
@@ -165,6 +178,7 @@ public class Network
             buf.writeDouble(homeLookPos.x);
             buf.writeDouble(homeLookPos.y);
             buf.writeDouble(homeLookPos.z);
+            buf.writeFloat(eyeHeight);
 
             buf.writeFloat(maxHP);
         }
@@ -175,6 +189,7 @@ public class Network
             homeDimension = buf.readInt();
             homePos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
             homeLookPos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
+            eyeHeight = buf.readFloat();
 
             maxHP = buf.readFloat();
         }

@@ -10,11 +10,11 @@ import net.minecraftforge.common.DimensionManager;
 
 public class CustomLivingEntity extends EntityLiving
 {
-    public static final float DEFAULT_WIDTH = 0.6f, DEFAULT_HEIGHT = 1.8f, DEFAULT_EYE_HEIGHT = DEFAULT_HEIGHT * 0.85F;
+    public static final float DEFAULT_WIDTH = 0.6f, DEFAULT_HEIGHT = 1.8f, DEFAULT_EYE_HEIGHT = 0.85F;
 
     public int homeDimension;
     public Vec3d homePos, homeLookPos;
-    float eyeHeight;
+    public float eyeHeight;
 
     public CustomLivingEntity(World world)
     {
@@ -30,6 +30,7 @@ public class CustomLivingEntity extends EntityLiving
         homeDimension = world.provider.getDimension();
         homePos = packet.homePos;
         homeLookPos = packet.homeLookPos;
+        eyeHeight = packet.eyeHeight;
 
         width = DEFAULT_WIDTH;
         height = DEFAULT_HEIGHT;
@@ -47,7 +48,7 @@ public class CustomLivingEntity extends EntityLiving
     @Override
     public float getEyeHeight()
     {
-        return eyeHeight;
+        return height * eyeHeight;
     }
 
     @Override

@@ -1,3 +1,6 @@
+Inheritance system for stats and for other things...
+...for stats, allow equation
+
 Look into animations
 
 
