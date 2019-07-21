@@ -7,7 +7,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -45,13 +44,13 @@ public class CustomEntities
         event.getRegistry().register(new EntityEntry(CustomLivingEntity.class, name).setRegistryName(name));
     }
 
-    @SubscribeEvent
-    public static void test(EntityJoinWorldEvent event)
-    {
-        if (event.getEntity() instanceof CustomLivingEntity)
-        {
-            CustomLivingEntity custom = (CustomLivingEntity) event.getEntity();
-            System.out.println(custom.eyeHeight);
-        }
-    }
+//    @SubscribeEvent
+//    public static void test(EntityJoinWorldEvent event)
+//    {
+//        if (event.getEntity() instanceof CustomLivingEntity)
+//        {
+//            CustomLivingEntity custom = (CustomLivingEntity) event.getEntity();
+//            System.out.println(custom.eyeHeight);
+//        }
+//    }
 }
