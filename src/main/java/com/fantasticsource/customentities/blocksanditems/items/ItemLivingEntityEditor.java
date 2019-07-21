@@ -34,47 +34,41 @@ public class ItemLivingEntityEditor extends Item
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void entityInteract(PlayerInteractEvent.EntityInteractSpecific event)
     {
-        //Server only
-        if (event.getSide() != Side.SERVER) return;
-
         //Creative mode only, and only for living entities
-        EntityPlayerMP player = (EntityPlayerMP) event.getEntityPlayer();
+        EntityPlayer player = event.getEntityPlayer();
         if (!player.capabilities.isCreativeMode || !(event.getTarget() instanceof EntityLiving)) return;
 
         //Only if holding the entity editor
-        if (event.getHand() == EnumHand.MAIN_HAND)
-        {
-            if (player.getHeldItemMainhand().getItem() != BlocksAndItems.livingentityeditor) return;
-        }
-        else
-        {
-            if (player.getHeldItemOffhand().getItem() != BlocksAndItems.livingentityeditor) return;
-        }
+        ItemStack itemStack;
+        if (event.getHand() == EnumHand.MAIN_HAND) itemStack = player.getHeldItemMainhand();
+        else itemStack = player.getHeldItemOffhand();
+        if (itemStack.getItem() != BlocksAndItems.livingentityeditor) return;
 
+
+        //Success, but client stops here
+        event.setCancellationResult(EnumActionResult.SUCCESS);
+        if (event.getSide() != Side.SERVER)
+        {
+            event.setCanceled(true);
+            return;
+        }
 
         //Open for clicked entity
-        Network.WRAPPER.sendTo(new Network.OpenLivingEntityGUIPacket((EntityLiving) event.getTarget()), player);
+        Network.WRAPPER.sendTo(new Network.OpenLivingEntityGUIPacket((EntityLiving) event.getTarget()), (EntityPlayerMP) player);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void blockInteract(PlayerInteractEvent.RightClickBlock event)
     {
-        //Server only
-        if (event.getSide() != Side.SERVER) return;
-
         //Creative mode only
-        EntityPlayerMP player = (EntityPlayerMP) event.getEntityPlayer();
+        EntityPlayer player = event.getEntityPlayer();
         if (!player.capabilities.isCreativeMode) return;
 
         //Only if holding the entity editor
-        if (event.getHand() == EnumHand.MAIN_HAND)
-        {
-            if (player.getHeldItemMainhand().getItem() != BlocksAndItems.livingentityeditor) return;
-        }
-        else
-        {
-            if (player.getHeldItemOffhand().getItem() != BlocksAndItems.livingentityeditor) return;
-        }
+        ItemStack itemStack;
+        if (event.getHand() == EnumHand.MAIN_HAND) itemStack = player.getHeldItemMainhand();
+        else itemStack = player.getHeldItemOffhand();
+        if (itemStack.getItem() != BlocksAndItems.livingentityeditor) return;
 
 
         //Create mode, at position right clicked
@@ -88,8 +82,16 @@ public class ItemLivingEntityEditor extends Item
         if (Tools.posMod(vec.y, 1) == 0 && player.posY + player.eyeHeight < vec.y) vec2 = vec2.addVector(0, -CustomLivingEntity.DEFAULT_HEIGHT, 0);
 
 
+        //Success, but client stops here
+        event.setCancellationResult(EnumActionResult.SUCCESS);
+        if (event.getSide() != Side.SERVER)
+        {
+            event.setCanceled(true);
+            return;
+        }
+
         //Open for clicked position
-        Network.WRAPPER.sendTo(new Network.OpenLivingEntityGUIPacket(vec2, player), player);
+        Network.WRAPPER.sendTo(new Network.OpenLivingEntityGUIPacket(vec2, (EntityPlayerMP) player), (EntityPlayerMP) player);
     }
 
     @Override

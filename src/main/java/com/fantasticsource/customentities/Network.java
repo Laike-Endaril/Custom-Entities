@@ -3,7 +3,6 @@ package com.fantasticsource.customentities;
 import com.fantasticsource.customentities.client.gui.LivingEntityGUI;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.Vec3d;
@@ -43,7 +42,7 @@ public class Network
 
         public OpenLivingEntityGUIPacket(EntityLiving living)
         {
-            maxHP = living.getMaxHealth();
+            homeDimension = living.dimension;
 
             if (living instanceof CustomLivingEntity)
             {
@@ -51,17 +50,14 @@ public class Network
                 homePos = custom.homePos;
                 homeLookPos = custom.homeLookPos;
             }
-            else if (living instanceof EntityCreature)
-            {
-                EntityCreature creature = (EntityCreature) living;
-                homePos = new Vec3d(creature.getHomePosition());
-                homeLookPos = homePos.add(creature.getLookVec());
-            }
             else
             {
                 homePos = new Vec3d(living.getPosition());
                 homeLookPos = homePos.add(living.getLookVec());
             }
+
+
+            maxHP = living.getMaxHealth();
         }
 
         public OpenLivingEntityGUIPacket(EntityPlayerMP player)

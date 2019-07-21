@@ -19,15 +19,10 @@ public class LivingEntityGUI extends GUIScreen
             FOREGROUND = new Color(0x777777FF),
             MOUSEOVER = new Color(0xAAAAAAFF),
             ACTIVE = new Color(0xFFFFFFFF);
-
-    private static GUIElement createElement;
-
-
     public static int homeDimension;
     public static Vec3d homePos, homeLookPos;
-
     public static float maxHP;
-
+    private static GUIElement createElement;
 
     public static void show(Network.OpenLivingEntityGUIPacket packet)
     {
