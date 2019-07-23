@@ -1,6 +1,32 @@
-Define the GUI...
-...Create (no existing entity) / Save (existing entity, custom or not)
-Convert (non-custom entities only; converts to custom entity)
+Create a custom entity handler to track all custom entities and their data, partially because it will make these things easier...
+...dead entities and their respawning
+...inheritance system
+...general tracking of custom entities and ability to edit them
+
+Save entities to file + data structure when dead, outside the normal MC systems
+
+
+
+Define the GUI; if we're working with an existing, non-custom entity, highlight custom-only stuff in yellow, as well as the "Convert" button
+If you press "Save" button for existing non-custom entity, and have changed custom-only settings, show a warning message
+...Create button (no existing entity) ...or... Save button (existing entity, custom or not)
+...Convert button (non-custom entities only; converts to custom entity)
+...Main tab (parent entity, name, title, hp, armor, xp, drops)
+...Physics & Rendering tab (pathfinding type, base hitbox w/h, base render scale x/y/z, global scaling w/h, visibility, texture, draw mode, blend, )
+...Attributes tab
+...Potions tab
+...Spawning tab (home dim/position/look vector, respawn cooldown, respawn conditions <time of day, moon phase>)
+...Faction tab
+...Inventory tab
+...AI tab (holy crap...see below)
+
+AI Tab
+targeting (targetTasks) (priority, conditions)
+attacks (tasks, high priority) (see below...)
+idle actions (tasks, low priority) (stand/look, wander, patrol route)
+
+Attacks
+damage, chain count, melee / ranged <arc, angle, pellet count, repeat count>
 
 Inheritance system for stats and for other things...
 ...for stats, allow equation
@@ -17,4 +43,6 @@ getEntityBoundingBox() returns the normal collision bounding box generally used 
 
 
 Low priority:
-Look into multiple hitboxes if a situation comes up where they'd be useful
+Look into multiple hitboxes if a situation comes up where they'd be useful...
+...could be good for worm-type enemies
+...might end up being a multi-entity thing rather than just a multi-hitbox thing though
