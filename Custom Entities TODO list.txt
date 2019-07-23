@@ -1,3 +1,10 @@
+Need new GUI elements...
+...buttons (can contain other elements and propagate activeness)
+...string input (with allowance filters; none/boolean/math; if the current text doesn't pass the filter, show in red)
+...tab view (tabs along top; filters event and render propagation based on active element)
+
+
+
 Create a custom entity handler to track all custom entities and their data, partially because it will make these things easier...
 ...dead entities and their respawning
 ...inheritance system
@@ -9,29 +16,44 @@ Save entities to file + data structure when dead, outside the normal MC systems
 
 Define the GUI; if we're working with an existing, non-custom entity, highlight custom-only stuff in yellow, as well as the "Convert" button
 If you press "Save" button for existing non-custom entity, and have changed custom-only settings, show a warning message
-...Create button (no existing entity) ...or... Save button (existing entity, custom or not)
-...Convert button (non-custom entities only; converts to custom entity)
-...Main tab (parent entity, name, title, hp, armor, xp, drops)
-...Physics & Rendering tab (pathfinding type, base hitbox w/h, base render scale x/y/z, global scaling w/h, visibility, texture, draw mode, blend, )
-...Attributes tab
-...Potions tab
+...File tab (see below)
+...Main tab (parent entity, name, title, hp, armor, speed, xp, faction)
+...Inventory tab (also includes drops)
 ...Spawning tab (home dim/position/look vector, respawn cooldown, respawn conditions <time of day, moon phase>)
-...Faction tab
-...Inventory tab
 ...AI tab (holy crap...see below)
+...Physics & Rendering tab (pathfinding type, base hitbox w/h, base render scale x/y/z, global scaling w/h, visibility, texture, draw mode, blend)
+...Attributes & Potions tab
+
+File tab
+list of existing custom entities (sortable by distance <default>, name, faction, parent); always has special entries at the top (new entity)
+save, load, delete buttons
 
 AI Tab
-targeting (targetTasks) (priority, conditions)
-attacks (tasks, high priority) (see below...)
-idle actions (tasks, low priority) (stand/look, wander, patrol route)
+targeting conditions (targetTasks)
+combat actions (tasks, high priority) (glorified animations; see below)
+idle actions (tasks, low priority) (stand/look / wander / patrol route, animation)
 
-Attacks
-damage, chain count, melee / ranged <arc, angle, pellet count, repeat count>
 
-Inheritance system for stats and for other things...
-...for stats, allow equation
 
-Look into animations
+Action GUI
+preview of action
+a series of timed nodes, each of which is...
+...time
+...set/add motion
+...transformations (model part and one or more of... translate x/y/z, scale x/y/z, rotate x/y/z, blend r/g/b/a)
+...damages (hitbox, amount)
+...projectile spawns (texture via item or location, number, accuracy, travel speed, damage, potion effects, terrain impact sound, entity impact sound)
+...entity spawns
+...potion effect applications
+...sound effects
+...commands to run
+
+
+
+Inheritance system for stats and for other things; use "p" to signify the parent value...
+...math parse for int/long/float/double eg. "p", "p * 2", "20"
+...bool parse for booleans eg. "p", "!p", "true"
+...string parse for strings eg. <p>, <"prefix" + p + "suffix">, <"Goblin">
 
 
 
