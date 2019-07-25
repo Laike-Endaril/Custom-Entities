@@ -30,7 +30,7 @@ save, load, delete buttons
 
 AI Tab
 targeting conditions (targetTasks)
-combat actions (tasks, high priority) (glorified animations; see below)
+combat actions (tasks, high priority) (actions, conditions <hp, cooldown>)
 idle actions (tasks, low priority) (stand/look / wander / patrol route, animation)
 
 
@@ -42,7 +42,7 @@ a series of timed nodes, each of which is...
 ...set/add motion
 ...transformations (model part and one or more of... translate x/y/z, scale x/y/z, rotate x/y/z, blend r/g/b/a)
 ...damages (hitbox, amount)
-...projectile spawns (texture via item or location, number, accuracy, travel speed, damage, potion effects, terrain impact sound, entity impact sound)
+...projectile spawns (texture via item or location, number, accuracy, arc, travel speed, gravity, damage, potion effects, terrain impact sound, entity impact sound)
 ...entity spawns
 ...potion effect applications
 ...sound effects
