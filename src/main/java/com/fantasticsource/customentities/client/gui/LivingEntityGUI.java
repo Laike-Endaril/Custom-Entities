@@ -4,8 +4,8 @@ import com.fantasticsource.customentities.Network;
 import com.fantasticsource.mctools.gui.GUILeftClickEvent;
 import com.fantasticsource.mctools.gui.GUIScreen;
 import com.fantasticsource.mctools.gui.guielements.GUIElement;
+import com.fantasticsource.mctools.gui.guielements.rect.GUIGradientRect;
 import com.fantasticsource.mctools.gui.guielements.rect.GUITextRect;
-import com.fantasticsource.mctools.gui.guielements.rect.GradientRect;
 import com.fantasticsource.tools.datastructures.Color;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.Vec3d;
@@ -56,7 +56,7 @@ public class LivingEntityGUI extends GUIScreen
     {
         super.initGui();
 
-        guiElements.add(new GradientRect(this, 0, 0, 1, 1, BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND));
+        guiElements.add(new GUIGradientRect(this, 0, 0, 1, 1, BACKGROUND, BACKGROUND, BACKGROUND, BACKGROUND));
 
         createElement = new GUITextRect(this, 0, 0, 1, "Create", FOREGROUND, MOUSEOVER, ACTIVE);
         guiElements.add(createElement);

@@ -1,7 +1,6 @@
 Need new GUI elements...
-...buttons (can contain other elements and propagate activeness)
+...buttons (can contain other elements and propagate hover and activeness)
 ...string input (with allowance filters; none/boolean/math; if the current text doesn't pass the filter, show in red)
-...tab view (tabs along top; filters event and render propagation based on active element)
 
 
 
@@ -31,7 +30,7 @@ save, load, delete buttons
 AI Tab
 targeting conditions (targetTasks)
 combat actions (tasks, high priority) (actions, conditions <hp, cooldown>)
-idle actions (tasks, low priority) (stand/look / wander / patrol route, animation)
+idle actions (tasks, low priority) (stand/look / wander (w/ option for step-up/down and area) / patrol route, animation)
 
 
 
@@ -41,7 +40,7 @@ a series of timed nodes, each of which is...
 ...time
 ...set/add motion
 ...transformations (model part and one or more of... translate x/y/z, scale x/y/z, rotate x/y/z, blend r/g/b/a)
-...damages (hitbox, amount)
+...damages (hitbox & amount for each)
 ...projectile spawns (texture via item or location, number, accuracy, arc, travel speed, gravity, damage, potion effects, terrain impact sound, entity impact sound)
 ...entity spawns
 ...potion effect applications
