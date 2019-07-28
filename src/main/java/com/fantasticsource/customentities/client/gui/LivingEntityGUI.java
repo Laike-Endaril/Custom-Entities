@@ -32,8 +32,6 @@ public class LivingEntityGUI extends GUIScreen
 
     public static float maxHP;
 
-    private static boolean ready = false;
-
 
     private static GUIElement createElement;
 
@@ -62,71 +60,68 @@ public class LivingEntityGUI extends GUIScreen
     @Override
     public void initGui()
     {
-        if (!ready)
+        guiElements.clear();
+
+        guiElements.add(new GUIGradientRect(this, 0, 0, 1, 1, T_BLACK, T_BLACK, T_GREEN, T_GREEN));
+
+        //Tab buttons
+        GUIRectElement[] tabs = new GUIRectElement[]
+                {
+                        new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
+                        new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
+                        new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
+                        new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
+                        new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
+                        new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
+                        new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
+                };
+        tabs[0].add(new GUITextRect(this, 0, 0, "File", GRAY_2, GRAY_1, WHITE));
+        tabs[1].add(new GUITextRect(this, 0, 0, "Main", GRAY_2, GRAY_1, WHITE));
+        tabs[2].add(new GUITextRect(this, 0, 0, "Inventory", GRAY_2, GRAY_1, WHITE));
+        tabs[3].add(new GUITextRect(this, 0, 0, "Spawning", GRAY_2, GRAY_1, WHITE));
+        tabs[4].add(new GUITextRect(this, 0, 0, "AI", GRAY_2, GRAY_1, WHITE));
+        tabs[5].add(new GUITextRect(this, 0, 0, "Physics & Rendering", GRAY_2, GRAY_1, WHITE));
+        tabs[6].add(new GUITextRect(this, 0, 0, "Attributes & Potions", GRAY_2, GRAY_1, WHITE));
+        double d = 0;
+        for (int i = 0; i < tabs.length; i++)
         {
-            ready = true;
-
-            guiElements.add(new GUIGradientRect(this, 0, 0, 1, 1, T_BLACK, T_BLACK, T_GREEN, T_GREEN));
-
-            //Tab buttons
-            GUIRectElement[] tabs = new GUIRectElement[]
-                    {
-                            new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
-                            new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
-                            new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
-                            new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
-                            new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
-                            new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
-                            new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
-                    };
-            tabs[0].add(new GUITextRect(this, 0, 0, "File", GRAY_2, GRAY_1, WHITE));
-            tabs[1].add(new GUITextRect(this, 0, 0, "Main", GRAY_2, GRAY_1, WHITE));
-            tabs[2].add(new GUITextRect(this, 0, 0, "Inventory", GRAY_2, GRAY_1, WHITE));
-            tabs[3].add(new GUITextRect(this, 0, 0, "Spawning", GRAY_2, GRAY_1, WHITE));
-            tabs[4].add(new GUITextRect(this, 0, 0, "AI", GRAY_2, GRAY_1, WHITE));
-            tabs[5].add(new GUITextRect(this, 0, 0, "Physics & Rendering", GRAY_2, GRAY_1, WHITE));
-            tabs[6].add(new GUITextRect(this, 0, 0, "Attributes & Potions", GRAY_2, GRAY_1, WHITE));
-            double d = 0;
-            for (int i = 0; i < tabs.length; i++)
-            {
-                GUIElement element = tabs[i];
-                element.x = d;
-                GUIElement subElement = element.get(0);
-                element.linkMouseActivity(subElement);
-                element.width = subElement.width;
-                element.height = subElement.height;
-                d += element.width;
-            }
-            d = (1 - d) / tabs.length;
-            for (int i = 0; i < tabs.length; i++)
-            {
-                GUIElement element = tabs[i];
-                element.x += d * i;
-                element.width += d;
-                element.height += 0.01;
-                element.get(0).x += d / 2;
-                element.get(0).y += 0.005 + 1d / width;
-            }
-            d = tabs[0].height;
-
-            //Tab views
-            GUIRectView[] tabViews = new GUIRectView[]
-                    {
-                            new GUIRectView(this, 0, d, 1, 1 - d),
-                            new GUIRectView(this, 0, d, 1, 1 - d),
-                            new GUIRectView(this, 0, d, 1, 1 - d),
-                            new GUIRectView(this, 0, d, 1, 1 - d),
-                            new GUIRectView(this, 0, d, 1, 1 - d),
-                            new GUIRectView(this, 0, d, 1, 1 - d),
-                            new GUIRectView(this, 0, d, 1, 1 - d),
-                    };
-
-            //Main tabview element
-            GUIRectTabView tabView = new GUIRectTabView(this, 0, 0, 1, 1, tabs, tabViews);
-            guiElements.add(tabView);
-
-            createElement = new GUITextRect(this, 0, 0, "Create", GRAY_2, GRAY_1, WHITE);
-            tabViews[0].add(createElement);
+            GUIElement element = tabs[i];
+            element.x = d;
+            GUIElement subElement = element.get(0);
+            element.linkMouseActivity(subElement);
+            element.width = subElement.width;
+            element.height = subElement.height;
+            d += element.width;
         }
+        d = (1 - d) / tabs.length;
+        for (int i = 0; i < tabs.length; i++)
+        {
+            GUIElement element = tabs[i];
+            element.x += d * i;
+            element.width += d;
+            element.height += 0.01;
+            element.get(0).x += d / 2;
+            element.get(0).y += 0.005 + 1d / width;
+        }
+        d = tabs[0].height;
+
+        //Tab views
+        GUIRectView[] tabViews = new GUIRectView[]
+                {
+                        new GUIRectView(this, 0, d, 1, 1 - d),
+                        new GUIRectView(this, 0, d, 1, 1 - d),
+                        new GUIRectView(this, 0, d, 1, 1 - d),
+                        new GUIRectView(this, 0, d, 1, 1 - d),
+                        new GUIRectView(this, 0, d, 1, 1 - d),
+                        new GUIRectView(this, 0, d, 1, 1 - d),
+                        new GUIRectView(this, 0, d, 1, 1 - d),
+                };
+
+        //Main tabview element
+        GUIRectTabView tabView = new GUIRectTabView(this, 0, 0, 1, 1, tabs, tabViews);
+        guiElements.add(tabView);
+
+        createElement = new GUITextRect(this, 0, 0, "Create", GRAY_2, GRAY_1, WHITE);
+        tabViews[0].add(createElement);
     }
 }
