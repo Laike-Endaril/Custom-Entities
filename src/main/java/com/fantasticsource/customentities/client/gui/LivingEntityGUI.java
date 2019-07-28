@@ -4,6 +4,7 @@ import com.fantasticsource.customentities.Network;
 import com.fantasticsource.mctools.gui.GUILeftClickEvent;
 import com.fantasticsource.mctools.gui.GUIScreen;
 import com.fantasticsource.mctools.gui.guielements.GUIElement;
+import com.fantasticsource.mctools.gui.guielements.rect.GUIGradientBorder;
 import com.fantasticsource.mctools.gui.guielements.rect.GUIGradientRect;
 import com.fantasticsource.mctools.gui.guielements.rect.GUIRectElement;
 import com.fantasticsource.mctools.gui.guielements.rect.GUITextRect;
@@ -18,10 +19,12 @@ public class LivingEntityGUI extends GUIScreen
 {
     private static final LivingEntityGUI GUI = new LivingEntityGUI();
     private static final Color
-            BACKGROUND = new Color(0x77),
-            FOREGROUND = new Color(0x777777FF),
-            MOUSEOVER = new Color(0xAAAAAAFF),
-            ACTIVE = new Color(0xFFFFFFFF);
+            GRAY_2 = new Color(0x777777FF),
+            GRAY_1 = new Color(0xAAAAAAFF),
+            WHITE = new Color(0xFFFFFFFF),
+            BLANK = new Color(0),
+            T_BLACK = new Color(0x77),
+            T_GREEN = new Color(0x00770077);
 
     public static int homeDimension;
     public static Vec3d homePos, homeLookPos;
@@ -63,22 +66,48 @@ public class LivingEntityGUI extends GUIScreen
         {
             ready = true;
 
+            guiElements.add(new GUIGradientRect(this, 0, 0, 1, 1, T_GREEN, T_GREEN, T_BLACK, T_BLACK));
+
+            //Tab buttons
             GUIRectElement[] tabs = new GUIRectElement[]
                     {
-                            new GUITextRect(this, 0, 0, "File", FOREGROUND, MOUSEOVER, ACTIVE),
-                            new GUITextRect(this, 0, 0, "Main", FOREGROUND, MOUSEOVER, ACTIVE),
-                            new GUITextRect(this, 0, 0, "Inventory", FOREGROUND, MOUSEOVER, ACTIVE),
-                            new GUITextRect(this, 0, 0, "Spawning", FOREGROUND, MOUSEOVER, ACTIVE),
-                            new GUITextRect(this, 0, 0, "AI", FOREGROUND, MOUSEOVER, ACTIVE),
-                            new GUITextRect(this, 0, 0, "Physics & Rendering", FOREGROUND, MOUSEOVER, ACTIVE),
-                            new GUITextRect(this, 0, 0, "Attributes & Potions", FOREGROUND, MOUSEOVER, ACTIVE),
+                            new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
+                            new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
+                            new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
+                            new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
+                            new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
+                            new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
+                            new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
                     };
+            tabs[0].add(new GUITextRect(this, 0, 0, "File", GRAY_2, GRAY_1, WHITE));
+            tabs[1].add(new GUITextRect(this, 0, 0, "Main", GRAY_2, GRAY_1, WHITE));
+            tabs[2].add(new GUITextRect(this, 0, 0, "Inventory", GRAY_2, GRAY_1, WHITE));
+            tabs[3].add(new GUITextRect(this, 0, 0, "Spawning", GRAY_2, GRAY_1, WHITE));
+            tabs[4].add(new GUITextRect(this, 0, 0, "AI", GRAY_2, GRAY_1, WHITE));
+            tabs[5].add(new GUITextRect(this, 0, 0, "Physics & Rendering", GRAY_2, GRAY_1, WHITE));
+            tabs[6].add(new GUITextRect(this, 0, 0, "Attributes & Potions", GRAY_2, GRAY_1, WHITE));
             double xx = 0;
-            for (GUIRectElement element : tabs)
+            for (int i = 0; i < tabs.length; i++)
             {
+                GUIElement element = tabs[i];
                 element.x = xx;
+                GUIElement subElement = element.get(0);
+                element.width = subElement.width;
+                element.height = subElement.height;
                 xx += element.width;
             }
+            xx = (1 - xx) / tabs.length;
+            for (int i = 0; i < tabs.length; i++)
+            {
+                GUIElement element = tabs[i];
+                element.x += xx * i;
+                element.width += xx;
+                element.height += 0.01;
+                element.get(0).x += xx / 2;
+                element.get(0).y += 0.005 + 1d / width;
+            }
+
+            //Tab views
             GUIRectView[] tabViews = new GUIRectView[]
                     {
                             new GUIRectView(this, 0, 0, 1, 1),
@@ -89,17 +118,11 @@ public class LivingEntityGUI extends GUIScreen
                             new GUIRectView(this, 0, 0, 1, 1),
                             new GUIRectView(this, 0, 0, 1, 1),
                     };
-            tabViews[0].children.add(new GUIGradientRect(this, 0, 0, 1, 1, new Color(0xFF), new Color(0xFF), new Color(0xFF), new Color(0xFF)));
-            tabViews[1].children.add(new GUIGradientRect(this, 0, 0, 1, 1, new Color(0xFF000055), new Color(0xFF000055), new Color(0xFF000055), new Color(0xFF000055)));
-            tabViews[2].children.add(new GUIGradientRect(this, 0, 0, 1, 1, new Color(0x00FF0055), new Color(0x00FF0055), new Color(0x00FF0055), new Color(0x00FF0055)));
-            tabViews[3].children.add(new GUIGradientRect(this, 0, 0, 1, 1, new Color(0x666666FF), new Color(0x666666FF), new Color(0x666666FF), new Color(0x666666FF)));
-            tabViews[4].children.add(new GUIGradientRect(this, 0, 0, 1, 1, new Color(0x888888FF), new Color(0x888888FF), new Color(0x888888FF), new Color(0x888888FF)));
-            tabViews[5].children.add(new GUIGradientRect(this, 0, 0, 1, 1, new Color(0xAAAAAAFF), new Color(0xAAAAAAFF), new Color(0xAAAAAAFF), new Color(0xAAAAAAFF)));
-            tabViews[6].children.add(new GUIGradientRect(this, 0, 0, 1, 1, new Color(0xCCCCCCFF), new Color(0xCCCCCCFF), new Color(0xCCCCCCFF), new Color(0xCCCCCCFF)));
 
+            //Main tabview element
             guiElements.add(new GUIRectTabView(this, 0, 0, 1, 1, tabs, tabViews));
 
-            createElement = new GUITextRect(this, 0, 0.5, "Create", FOREGROUND, MOUSEOVER, ACTIVE);
+            createElement = new GUITextRect(this, 0, 0.5, "Create", GRAY_2, GRAY_1, WHITE);
             guiElements.add(createElement);
         }
     }
