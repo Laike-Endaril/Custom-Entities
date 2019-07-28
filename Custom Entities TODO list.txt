@@ -1,5 +1,4 @@
 Need new GUI elements...
-...buttons (can contain other elements and propagate hover and activeness)
 ...string input (with allowance filters; none/boolean/math; if the current text doesn't pass the filter, show in red)
 
 
