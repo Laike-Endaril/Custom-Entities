@@ -4,12 +4,14 @@ import com.fantasticsource.customentities.Network;
 import com.fantasticsource.mctools.gui.GUILeftClickEvent;
 import com.fantasticsource.mctools.gui.GUIScreen;
 import com.fantasticsource.mctools.gui.guielements.GUIElement;
-import com.fantasticsource.mctools.gui.guielements.rect.*;
+import com.fantasticsource.mctools.gui.guielements.rect.GUIGradientBorder;
+import com.fantasticsource.mctools.gui.guielements.rect.GUIGradientRect;
+import com.fantasticsource.mctools.gui.guielements.rect.GUIRectElement;
+import com.fantasticsource.mctools.gui.guielements.rect.GUITextRect;
 import com.fantasticsource.mctools.gui.guielements.rect.view.GUIRectTabView;
 import com.fantasticsource.mctools.gui.guielements.rect.view.GUIRectView;
 import com.fantasticsource.tools.datastructures.Color;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class LivingEntityGUI extends GUIScreen
@@ -25,24 +27,14 @@ public class LivingEntityGUI extends GUIScreen
             RED = new Color(0xFF0000FF),
             T_RED = new Color(0xFF000055);
 
-    public static int homeDimension;
-    public static Vec3d homePos, homeLookPos;
-    public static float eyeHeight;
-
-    public static float maxHP;
+    public static Network.OpenLivingEntityGUIPacket packet;
 
 
     private static GUIElement createElement;
 
     public static void show(Network.OpenLivingEntityGUIPacket packet)
     {
-        homeDimension = packet.homeDimension;
-        homePos = packet.homePos;
-        homeLookPos = packet.homeLookPos;
-        eyeHeight = packet.eyeHeight;
-
-        maxHP = packet.maxHP;
-
+        LivingEntityGUI.packet = packet;
         Minecraft.getMinecraft().displayGuiScreen(GUI);
     }
 
@@ -80,7 +72,7 @@ public class LivingEntityGUI extends GUIScreen
         tabs[3].add(new GUITextRect(this, 0, 0, "Spawning", GRAY_2, GRAY_1, WHITE));
         tabs[4].add(new GUITextRect(this, 0, 0, "AI", GRAY_2, GRAY_1, WHITE));
         tabs[5].add(new GUITextRect(this, 0, 0, "Physics & Rendering", GRAY_2, GRAY_1, WHITE));
-        tabs[6].add(new GUITextRect(this, 0, 0, "Attributes & Potions", GRAY_2, GRAY_1, WHITE));
+        tabs[6].add(new GUITextRect(this, 0, 0, "Potions & Attributes", GRAY_2, GRAY_1, WHITE));
         double d = 0;
         for (int i = 0; i < tabs.length; i++)
         {
@@ -107,20 +99,18 @@ public class LivingEntityGUI extends GUIScreen
         //Tab views
         GUIRectView[] tabViews = new GUIRectView[]
                 {
-                        new GUIRectView(this, 0, d, 1, 1 - d),
-                        new GUIRectView(this, 0, d, 1, 1 - d),
-                        new GUIRectView(this, 0, d, 1, 1 - d),
-                        new GUIRectView(this, 0, d, 1, 1 - d),
-                        new GUIRectView(this, 0, d, 1, 1 - d),
-                        new GUIRectView(this, 0, d, 1, 1 - d),
-                        new GUIRectView(this, 0, d, 1, 1 - d),
+                        new LivingEntityFileView(this, 0, d, 1, 1 - d, packet),
+                        new LivingEntityMainView(this, 0, d, 1, 1 - d, packet),
+                        new LivingEntityInventoryView(this, 0, d, 1, 1 - d, packet),
+                        new LivingEntitySpawningView(this, 0, d, 1, 1 - d, packet),
+                        new LivingEntityAIView(this, 0, d, 1, 1 - d, packet),
+                        new LivingEntityPhysicsRenderView(this, 0, d, 1, 1 - d, packet),
+                        new LivingEntityPotionsAttributesView(this, 0, d, 1, 1 - d, packet),
                 };
 
         //Main tabview element
         GUIRectTabView tabView = new GUIRectTabView(this, 0, 0, 1, 1, tabs, tabViews);
         guiElements.add(tabView);
-
-        guiElements.add(new GUITextInputRect(this, 0.5, 0.5, "Test", GRAY_2, GRAY_1, WHITE, RED, T_RED));
 
         createElement = new GUITextRect(this, 0, 0, "Create", GRAY_2, GRAY_1, WHITE);
         tabViews[0].add(createElement);
