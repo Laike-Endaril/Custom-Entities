@@ -4,10 +4,7 @@ import com.fantasticsource.customentities.Network;
 import com.fantasticsource.mctools.gui.GUILeftClickEvent;
 import com.fantasticsource.mctools.gui.GUIScreen;
 import com.fantasticsource.mctools.gui.guielements.GUIElement;
-import com.fantasticsource.mctools.gui.guielements.rect.GUIGradientBorder;
-import com.fantasticsource.mctools.gui.guielements.rect.GUIGradientRect;
-import com.fantasticsource.mctools.gui.guielements.rect.GUIRectElement;
-import com.fantasticsource.mctools.gui.guielements.rect.GUITextRect;
+import com.fantasticsource.mctools.gui.guielements.rect.*;
 import com.fantasticsource.mctools.gui.guielements.rect.view.GUIRectTabView;
 import com.fantasticsource.mctools.gui.guielements.rect.view.GUIRectView;
 import com.fantasticsource.tools.datastructures.Color;
@@ -24,7 +21,9 @@ public class LivingEntityGUI extends GUIScreen
             WHITE = new Color(0xFFFFFFFF),
             BLANK = new Color(0),
             T_BLACK = new Color(0xAA),
-            T_GREEN = new Color(0x002200AA);
+            T_GREEN = new Color(0x002200AA),
+            RED = new Color(0xFF0000FF),
+            T_RED = new Color(0xFF000055);
 
     public static int homeDimension;
     public static Vec3d homePos, homeLookPos;
@@ -120,6 +119,8 @@ public class LivingEntityGUI extends GUIScreen
         //Main tabview element
         GUIRectTabView tabView = new GUIRectTabView(this, 0, 0, 1, 1, tabs, tabViews);
         guiElements.add(tabView);
+
+        guiElements.add(new GUITextInputRect(this, 0.5, 0.5, "Test", GRAY_2, GRAY_1, WHITE, RED, T_RED));
 
         createElement = new GUITextRect(this, 0, 0, "Create", GRAY_2, GRAY_1, WHITE);
         tabViews[0].add(createElement);

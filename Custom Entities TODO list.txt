@@ -1,5 +1,7 @@
-Need new GUI elements...
-...string input (with allowance filters; none/boolean/math; if the current text doesn't pass the filter, show in red)
+Add text input filters...
+...none
+...boolean
+...math
 
 
 
