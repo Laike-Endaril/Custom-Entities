@@ -4,6 +4,7 @@ import com.fantasticsource.customentities.CustomEntities;
 import com.fantasticsource.customentities.CustomLivingEntity;
 import com.fantasticsource.customentities.Network;
 import com.fantasticsource.customentities.blocksanditems.BlocksAndItems;
+import com.fantasticsource.mctools.MCTools;
 import com.fantasticsource.tools.Tools;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,9 +35,10 @@ public class ItemLivingEntityEditor extends Item
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void entityInteract(PlayerInteractEvent.EntityInteractSpecific event)
     {
-        //Creative mode only, and only for living entities
         EntityPlayer player = event.getEntityPlayer();
-        if (!player.capabilities.isCreativeMode || !(event.getTarget() instanceof EntityLiving)) return;
+
+        //Only for living entities
+        if (!(event.getTarget() instanceof EntityLiving)) return;
 
         //Only if holding the entity editor
         ItemStack itemStack;
@@ -53,6 +55,10 @@ public class ItemLivingEntityEditor extends Item
             return;
         }
 
+
+        //OP players only (no way to check from client side afaik)
+        if (!MCTools.isOP((EntityPlayerMP) player)) return;
+
         //Open for clicked entity
         Network.WRAPPER.sendTo(new Network.OpenLivingEntityGUIPacket((EntityLiving) event.getTarget()), (EntityPlayerMP) player);
     }
@@ -60,9 +66,7 @@ public class ItemLivingEntityEditor extends Item
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void blockInteract(PlayerInteractEvent.RightClickBlock event)
     {
-        //Creative mode only
         EntityPlayer player = event.getEntityPlayer();
-        if (!player.capabilities.isCreativeMode) return;
 
         //Only if holding the entity editor
         ItemStack itemStack;
@@ -90,6 +94,10 @@ public class ItemLivingEntityEditor extends Item
             return;
         }
 
+
+        //OP players only (no way to check from client side afaik)
+        if (!MCTools.isOP((EntityPlayerMP) player)) return;
+
         //Open for clicked position
         Network.WRAPPER.sendTo(new Network.OpenLivingEntityGUIPacket(vec2, (EntityPlayerMP) player), (EntityPlayerMP) player);
     }
@@ -101,12 +109,12 @@ public class ItemLivingEntityEditor extends Item
         ItemStack itemstack = hand == EnumHand.MAIN_HAND ? player.getHeldItemMainhand() : player.getHeldItemOffhand();
         if (itemstack.getItem() != BlocksAndItems.livingentityeditor) return new ActionResult<>(EnumActionResult.FAIL, itemstack);
 
-        //Creative mode only
-        if (!player.capabilities.isCreativeMode) return new ActionResult<>(EnumActionResult.FAIL, itemstack);
-
         //Success, but only server takes actions
         if (world.isRemote) return new ActionResult<>(EnumActionResult.SUCCESS, itemstack);
 
+
+        //OP players only (no way to check from client side afaik)
+        if (!MCTools.isOP((EntityPlayerMP) player)) return new ActionResult<>(EnumActionResult.SUCCESS, itemstack);
 
         //Create, either <where player is looking, a little ways out, looking back at player>, or <where player is, looking where player is looking>
         Network.WRAPPER.sendTo(new Network.OpenLivingEntityGUIPacket((EntityPlayerMP) player), (EntityPlayerMP) player);
