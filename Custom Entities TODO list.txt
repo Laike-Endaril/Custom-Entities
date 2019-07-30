@@ -23,10 +23,11 @@ If you press "Save" button for existing non-custom entity, and have changed cust
 ...AI tab (holy crap...see below)
 ...Physics & Rendering tab (pathfinding type, base hitbox w/h, base render scale x/y/z, global scaling w/h, visibility, texture, draw mode, blend)
 ...Attributes & Potions tab
+...Events tab (respawn, death, damage taken, damage dealt, healed, right clicked)
 
 File tab
 list of existing custom entities (sortable by distance <default>, name, faction, parent); always has special entries at the top (new entity)
-save, load, delete buttons
+create/save, load, delete
 
 AI Tab
 targeting conditions (targetTasks)
@@ -37,16 +38,35 @@ idle actions (tasks, low priority) (stand/look / wander (w/ option for step-up/d
 
 Action GUI
 preview of action
-a series of timed nodes, each of which is...
-...time
-...set/add motion
-...transformations (model part and one or more of... translate x/y/z, scale x/y/z, rotate x/y/z, blend r/g/b/a)
-...damages (hitbox & amount for each)
-...projectile spawns (texture via item or location, number, accuracy, arc, travel speed, gravity, damage, potion effects, terrain impact sound, entity impact sound)
+a series of timed nodes, each of which is a time and scripting to run
+
+
+
+Scripting keywords...
+...this
+...other
+...parent
+
+Scripting vars...
+...x, y, z
+...xSpeed, ySpeed, zSpeed
+...
+
+Scripting methods (some arguments can be left blank)...
+...command(command)
+...setAction(action, time)
+...setMotion(x, y, z)
+...addMotion(x, y, z)
+...setTransforms(modelPart, transforms...)
+.....translate(x, y, z)
+.....scale(x, y, z)
+.....rotate(x, y, z)
+.....blend(r, g, b, a)
+...dealDamage(hitbox, amount, type)
+...projectile(texture (resourceLocation of item or texture), number, accuracy, speed, arc, gravity, damage, potion effects, terrainImpactSound, entityImpactSound)
 ...entity spawns
 ...potion effect applications
 ...sound effects
-...commands to run
 
 
 
