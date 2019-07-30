@@ -3,7 +3,6 @@ package com.fantasticsource.customentities;
 import com.fantasticsource.customentities.blocksanditems.BlocksAndItems;
 import com.fantasticsource.customentities.blocksanditems.items.ItemLivingEntityEditor;
 import com.fantasticsource.customentities.client.RenderCustomLiving;
-import com.fantasticsource.customentities.client.gui.LivingEntityGUI;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
@@ -32,7 +31,6 @@ public class CustomEntities
         MinecraftForge.EVENT_BUS.register(CustomEntities.class);
         MinecraftForge.EVENT_BUS.register(BlocksAndItems.class);
         MinecraftForge.EVENT_BUS.register(ItemLivingEntityEditor.class);
-        MinecraftForge.EVENT_BUS.register(LivingEntityGUI.class);
 
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
         {
@@ -60,14 +58,4 @@ public class CustomEntities
                 .tracker(64, 3, true);
         event.getRegistry().register(builder.build());
     }
-
-//    @SubscribeEvent
-//    public static void test(EntityJoinWorldEvent event)
-//    {
-//        if (event.getEntity() instanceof CustomLivingEntity)
-//        {
-//            CustomLivingEntity custom = (CustomLivingEntity) event.getEntity();
-//            System.out.println(custom.eyeHeight);
-//        }
-//    }
 }
