@@ -17,14 +17,11 @@ public class LivingEntityGUI extends GUIScreen
             GRAY_2 = new Color(0x777777FF),
             GRAY_1 = new Color(0xAAAAAAFF),
             WHITE = new Color(0xFFFFFFFF),
-            T_GRAY_2 = new Color(0x77777733),
-            T_GRAY_1 = new Color(0xAAAAAA33),
-            T_WHITE = new Color(0xFFFFFF33),
-            BLANK = new Color(0),
-            T_BLACK = new Color(0xDD),
-            RED = new Color(0xFF0000FF),
-            T_RED = new Color(0xFF000055);
+            T_BLACK = new Color(0xDD);
+
+
     private static final LivingEntityGUI GUI = new LivingEntityGUI();
+
     public static Network.OpenLivingEntityGUIPacket packet;
 
 
