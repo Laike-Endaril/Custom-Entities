@@ -3,10 +3,9 @@ package com.fantasticsource.customentities.client.gui;
 import com.fantasticsource.customentities.Network;
 import com.fantasticsource.mctools.gui.GUIScreen;
 import com.fantasticsource.mctools.gui.guielements.GUIElement;
-import com.fantasticsource.mctools.gui.guielements.rect.GUIGradientBorder;
 import com.fantasticsource.mctools.gui.guielements.rect.GUIGradientRect;
 import com.fantasticsource.mctools.gui.guielements.rect.GUIRectElement;
-import com.fantasticsource.mctools.gui.guielements.rect.GUITextRect;
+import com.fantasticsource.mctools.gui.guielements.rect.GUITextButton;
 import com.fantasticsource.mctools.gui.guielements.rect.view.GUIRectTabView;
 import com.fantasticsource.mctools.gui.guielements.rect.view.GUIRectView;
 import com.fantasticsource.tools.datastructures.Color;
@@ -18,6 +17,8 @@ public class LivingEntityGUI extends GUIScreen
             GRAY_2 = new Color(0x777777FF),
             GRAY_1 = new Color(0xAAAAAAFF),
             WHITE = new Color(0xFFFFFFFF),
+            T_GRAY_2 = new Color(0x77777733),
+            T_GRAY_1 = new Color(0xAAAAAA33),
             T_WHITE = new Color(0xFFFFFF33),
             BLANK = new Color(0),
             T_BLACK = new Color(0xDD),
@@ -42,48 +43,22 @@ public class LivingEntityGUI extends GUIScreen
 
 
         //Tab buttons
-        String[] strings = new String[]
-                {
-                        "File",
-                        "Main",
-                        "Inventory",
-                        "Spawning",
-                        "AI",
-                        "Physics & Rendering",
-                        "Potions & Attributes",
-                };
         GUIRectElement[] tabs = new GUIRectElement[]
                 {
-                        new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
-                        new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
-                        new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
-                        new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
-                        new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
-                        new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
-                        new GUIGradientBorder(this, 0, 0, 0, 0, 1d / 120, WHITE, BLANK),
+                        new GUITextButton(this, 0, 0, "File", WHITE),
+                        new GUITextButton(this, 0, 0, "Main", WHITE),
+                        new GUITextButton(this, 0, 0, "Inventory", WHITE),
+                        new GUITextButton(this, 0, 0, "Spawning", WHITE),
+                        new GUITextButton(this, 0, 0, "AI", WHITE),
+                        new GUITextButton(this, 0, 0, "Physics & Rendering", WHITE),
+                        new GUITextButton(this, 0, 0, "Potions & Attributes", WHITE),
                 };
         double d = 0;
         for (int i = 0; i < tabs.length; i++)
         {
             GUIElement element = tabs[i];
-            element.add(new GUIGradientRect(this, 0, 0, 1, 1, T_WHITE, T_WHITE, T_WHITE, T_WHITE));
-            GUIElement textElement = new GUITextRect(this, 0, 0, strings[i], GRAY_2, GRAY_1, WHITE);
-            element.add(textElement);
             element.x = d;
-            element.linkMouseActivity(textElement);
-            element.width = textElement.width;
-            element.height = textElement.height;
             d += element.width;
-        }
-        d = (1 - d) / tabs.length;
-        for (int i = 0; i < tabs.length; i++)
-        {
-            GUIElement element = tabs[i];
-            element.x += d * i;
-            element.width += d;
-            element.height += 0.01;
-            element.get(1).x += d / 2;
-            element.get(1).y += 0.005 + 1d / width;
         }
         d = tabs[0].height;
 
