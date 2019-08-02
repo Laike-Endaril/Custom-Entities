@@ -176,15 +176,14 @@ public class Network
             //Required
         }
 
-        public CreateLivingEntityPacket(boolean dummyBool)
+        public CreateLivingEntityPacket(OpenLivingEntityGUIPacket packet)
         {
-            //TODO Change these to reference GUI text inputs
-            homeDimension = LivingEntityGUI.packet.homeDimension;
-            homePos = LivingEntityGUI.packet.homePos;
-            homeLookPos = LivingEntityGUI.packet.homeLookPos;
-            eyeHeight = LivingEntityGUI.packet.eyeHeight;
+            homeDimension = packet.homeDimension;
+            homePos = packet.homePos;
+            homeLookPos = packet.homeLookPos;
+            eyeHeight = packet.eyeHeight;
 
-            maxHP = LivingEntityGUI.packet.maxHP;
+            maxHP = packet.maxHP;
         }
 
         @Override

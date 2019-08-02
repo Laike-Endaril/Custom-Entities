@@ -35,7 +35,7 @@ public class LivingEntityFileView extends GUIRectView
         if (event.getElement() == createElement)
         {
             Minecraft.getMinecraft().player.closeScreen();
-            Network.WRAPPER.sendToServer(new Network.CreateLivingEntityPacket(true));
+            Network.WRAPPER.sendToServer(new Network.CreateLivingEntityPacket(packet));
         }
     }
 }
