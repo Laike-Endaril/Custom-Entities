@@ -4,9 +4,9 @@ import com.fantasticsource.customentities.Network;
 import com.fantasticsource.mctools.gui.GUIScreen;
 import com.fantasticsource.mctools.gui.guielements.rect.view.GUIRectView;
 
-public class LivingEntitySpawningView extends GUIRectView
+public class LivingEntitySpawnView extends GUIRectView
 {
-    public LivingEntitySpawningView(GUIScreen screen, double x, double y, double width, double height, Network.OpenLivingEntityGUIPacket packet)
+    public LivingEntitySpawnView(GUIScreen screen, double x, double y, double width, double height, Network.OpenLivingEntityGUIPacket packet)
     {
         super(screen, x, y, width, height);
     }

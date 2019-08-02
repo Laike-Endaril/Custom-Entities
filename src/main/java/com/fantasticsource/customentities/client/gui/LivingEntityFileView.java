@@ -4,13 +4,14 @@ import com.fantasticsource.customentities.Network;
 import com.fantasticsource.mctools.gui.GUILeftClickEvent;
 import com.fantasticsource.mctools.gui.GUIScreen;
 import com.fantasticsource.mctools.gui.guielements.GUIElement;
-import com.fantasticsource.mctools.gui.guielements.rect.GUITextButton;
+import com.fantasticsource.mctools.gui.guielements.rect.text.GUITextButton;
 import com.fantasticsource.mctools.gui.guielements.rect.view.GUIRectView;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import static com.fantasticsource.customentities.client.gui.LivingEntityGUI.*;
+import static com.fantasticsource.customentities.client.gui.LivingEntityGUI.GREEN;
+import static com.fantasticsource.customentities.client.gui.LivingEntityGUI.packet;
 
 public class LivingEntityFileView extends GUIRectView
 {
@@ -35,7 +36,10 @@ public class LivingEntityFileView extends GUIRectView
         if (event.getElement() == createElement)
         {
             Minecraft.getMinecraft().player.closeScreen();
-            Network.WRAPPER.sendToServer(new Network.CreateLivingEntityPacket(packet));
+
+            packet.name = LivingEntityMainView.nameElement.input.text;
+
+            Network.WRAPPER.sendToServer(new Network.ApplyToLivingEntityPacket(packet));
         }
     }
 }

@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -22,22 +23,69 @@ public class Network
     public static void init()
     {
         WRAPPER.registerMessage(OpenLivingEntityGUIPacketHandler.class, OpenLivingEntityGUIPacket.class, discriminator++, Side.CLIENT);
-        WRAPPER.registerMessage(CreateLivingEntityPacketHandler.class, CreateLivingEntityPacket.class, discriminator++, Side.SERVER);
+        WRAPPER.registerMessage(CreateLivingEntityPacketHandler.class, ApplyToLivingEntityPacket.class, discriminator++, Side.SERVER);
     }
 
 
-    public static class OpenLivingEntityGUIPacket implements IMessage
+    public static abstract class IEntityMessage implements IMessage
     {
+        //Backend
         public boolean hasID;
         public int entityID;
 
+        //Main
+        public String name;
         public int homeDimension;
         public Vec3d homePos, homeLookPos;
-        public float eyeHeight;
-
         public float maxHP;
 
+        //Physics and Render
+        public float eyeHeight;
 
+
+        @Override
+        public void toBytes(ByteBuf buf)
+        {
+            //Backend
+            buf.writeBoolean(hasID);
+            if (hasID) buf.writeInt(entityID);
+
+            //Main
+            ByteBufUtils.writeUTF8String(buf, name);
+            buf.writeInt(homeDimension);
+            buf.writeDouble(homePos.x);
+            buf.writeDouble(homePos.y);
+            buf.writeDouble(homePos.z);
+            buf.writeDouble(homeLookPos.x);
+            buf.writeDouble(homeLookPos.y);
+            buf.writeDouble(homeLookPos.z);
+            buf.writeFloat(maxHP);
+
+            //Physics and Render
+            buf.writeFloat(eyeHeight);
+        }
+
+        @Override
+        public void fromBytes(ByteBuf buf)
+        {
+            //Backend
+            hasID = buf.readBoolean();
+            if (hasID) entityID = buf.readInt();
+
+            //Main
+            name = ByteBufUtils.readUTF8String(buf);
+            homeDimension = buf.readInt();
+            homePos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
+            homeLookPos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
+            maxHP = buf.readFloat();
+
+            //Physics and Render
+            eyeHeight = buf.readFloat();
+        }
+    }
+
+    public static class OpenLivingEntityGUIPacket extends IEntityMessage
+    {
         public OpenLivingEntityGUIPacket()
         {
             //Required
@@ -45,11 +93,13 @@ public class Network
 
         public OpenLivingEntityGUIPacket(EntityLiving living)
         {
+            //Backend
             hasID = true;
             entityID = living.getEntityId();
 
+            //Main
+            name = living.getName();
             homeDimension = living.dimension;
-
             if (living instanceof CustomLivingEntity)
             {
                 CustomLivingEntity custom = (CustomLivingEntity) living;
@@ -61,21 +111,20 @@ public class Network
                 homePos = new Vec3d(living.getPosition());
                 homeLookPos = homePos.add(living.getLookVec());
             }
-            eyeHeight = living.getEyeHeight();
-
-
             maxHP = living.getMaxHealth();
+
+            //Physics and Render
+            eyeHeight = living.getEyeHeight();
         }
 
         public OpenLivingEntityGUIPacket(EntityPlayerMP player)
         {
+            //Backend
             hasID = false;
 
+            //Main
+            name = "Custom Living Entity";
             homeDimension = player.dimension;
-            eyeHeight = CustomLivingEntity.DEFAULT_EYE_HEIGHT;
-
-            maxHP = 20;
-
             if (player.isSneaking())
             {
                 //Create at the player's position, looking the same direction as the player
@@ -88,19 +137,21 @@ public class Network
                 homeLookPos = player.getPositionVector().addVector(0, player.eyeHeight, 0);
                 homePos = homeLookPos.add(player.getLookVec().addVector(0, player.eyeHeight - eyeHeight, 0));
             }
+            maxHP = 20;
+
+            //Physics and Render
+            eyeHeight = CustomLivingEntity.DEFAULT_EYE_HEIGHT;
         }
 
         public OpenLivingEntityGUIPacket(Vec3d homePos, EntityPlayerMP player)
         {
+            //Backend
             hasID = false;
 
+            //Main
+            name = "Custom Living Entity";
             homeDimension = player.dimension;
-            this.homePos = homePos;
-            eyeHeight = CustomLivingEntity.DEFAULT_EYE_HEIGHT;
-
-            maxHP = 20;
-
-            //Create at the clicked position...
+            this.homePos = homePos; //Create at the clicked position...
             if (player.isSneaking())
             {
                 //...looking into the player's eyes
@@ -111,39 +162,10 @@ public class Network
                 //...looking in the direction of the player, except for the vertical part (not looking up or down)
                 homeLookPos = player.getPositionVector().addVector(0, CustomLivingEntity.DEFAULT_EYE_HEIGHT, 0);
             }
-        }
+            maxHP = 20;
 
-
-        @Override
-        public void toBytes(ByteBuf buf)
-        {
-            buf.writeBoolean(hasID);
-            if (hasID) buf.writeInt(entityID);
-
-            buf.writeInt(homeDimension);
-            buf.writeDouble(homePos.x);
-            buf.writeDouble(homePos.y);
-            buf.writeDouble(homePos.z);
-            buf.writeDouble(homeLookPos.x);
-            buf.writeDouble(homeLookPos.y);
-            buf.writeDouble(homeLookPos.z);
-            buf.writeFloat(eyeHeight);
-
-            buf.writeFloat(maxHP);
-        }
-
-        @Override
-        public void fromBytes(ByteBuf buf)
-        {
-            hasID = buf.readBoolean();
-            if (hasID) entityID = buf.readInt();
-
-            homeDimension = buf.readInt();
-            homePos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
-            homeLookPos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
-            eyeHeight = buf.readFloat();
-
-            maxHP = buf.readFloat();
+            //Physics and Render
+            eyeHeight = CustomLivingEntity.DEFAULT_EYE_HEIGHT;
         }
     }
 
@@ -159,70 +181,35 @@ public class Network
     }
 
 
-    public static class CreateLivingEntityPacket implements IMessage
+    public static class ApplyToLivingEntityPacket extends IEntityMessage
     {
-        public boolean hasID;
-        public int entityID;
-
-        public int homeDimension;
-        public Vec3d homePos, homeLookPos;
-        public float eyeHeight;
-
-        public float maxHP;
-
-
-        public CreateLivingEntityPacket()
+        public ApplyToLivingEntityPacket()
         {
             //Required
         }
 
-        public CreateLivingEntityPacket(OpenLivingEntityGUIPacket packet)
+        public ApplyToLivingEntityPacket(OpenLivingEntityGUIPacket packet)
         {
+            //Backend
+            hasID = packet.hasID;
+            if (hasID) entityID = packet.entityID;
+
+            //Main
+            name = packet.name;
             homeDimension = packet.homeDimension;
             homePos = packet.homePos;
             homeLookPos = packet.homeLookPos;
-            eyeHeight = packet.eyeHeight;
-
             maxHP = packet.maxHP;
-        }
 
-        @Override
-        public void toBytes(ByteBuf buf)
-        {
-            buf.writeBoolean(hasID);
-            if (hasID) buf.writeInt(entityID);
-
-            buf.writeInt(homeDimension);
-            buf.writeDouble(homePos.x);
-            buf.writeDouble(homePos.y);
-            buf.writeDouble(homePos.z);
-            buf.writeDouble(homeLookPos.x);
-            buf.writeDouble(homeLookPos.y);
-            buf.writeDouble(homeLookPos.z);
-            buf.writeFloat(eyeHeight);
-
-            buf.writeFloat(maxHP);
-        }
-
-        @Override
-        public void fromBytes(ByteBuf buf)
-        {
-            hasID = buf.readBoolean();
-            if (hasID) entityID = buf.readInt();
-
-            homeDimension = buf.readInt();
-            homePos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
-            homeLookPos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
-            eyeHeight = buf.readFloat();
-
-            maxHP = buf.readFloat();
+            //Physics and Render
+            eyeHeight = packet.eyeHeight;
         }
     }
 
-    public static class CreateLivingEntityPacketHandler implements IMessageHandler<CreateLivingEntityPacket, IMessage>
+    public static class CreateLivingEntityPacketHandler implements IMessageHandler<ApplyToLivingEntityPacket, IMessage>
     {
         @Override
-        public IMessage onMessage(CreateLivingEntityPacket packet, MessageContext ctx)
+        public IMessage onMessage(ApplyToLivingEntityPacket packet, MessageContext ctx)
         {
             if (ctx.getServerHandler().player.capabilities.isCreativeMode) FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> CustomLivingEntity.handlePacket(packet));
             return null;

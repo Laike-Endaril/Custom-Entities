@@ -22,16 +22,17 @@ public class CustomLivingEntity extends EntityLiving
         super(world);
     }
 
-    public CustomLivingEntity(Network.CreateLivingEntityPacket packet)
+    public CustomLivingEntity(Network.ApplyToLivingEntityPacket packet)
     {
+        //Main
         super(DimensionManager.getWorld(packet.homeDimension));
-
-
+        setCustomNameTag(packet.name);
         homeDimension = world.provider.getDimension();
         homePos = packet.homePos;
         homeLookPos = packet.homeLookPos;
-        eyeHeight = packet.eyeHeight;
 
+        //Physics and Render
+        eyeHeight = packet.eyeHeight;
         width = DEFAULT_WIDTH;
         height = DEFAULT_HEIGHT;
 
@@ -45,7 +46,7 @@ public class CustomLivingEntity extends EntityLiving
         setLocationAndAngles(homePos.x, homePos.y, homePos.z, yaw, pitch);
     }
 
-    public static void handlePacket(Network.CreateLivingEntityPacket packet)
+    public static void handlePacket(Network.ApplyToLivingEntityPacket packet)
     {
         World world = DimensionManager.getWorld(packet.homeDimension);
 
@@ -64,6 +65,11 @@ public class CustomLivingEntity extends EntityLiving
                 //Edit existing non-custom living entity, with the option of converting it to a custom entity
             }
             else world.spawnEntity(new CustomLivingEntity(packet));
+
+            if (entity != null)
+            {
+                entity.setCustomNameTag(packet.name);
+            }
         }
     }
 
