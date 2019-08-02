@@ -10,10 +10,8 @@ import net.minecraft.client.Minecraft;
 public class LivingEntityGUI extends GUIScreen
 {
     public static final Color
-            GRAY_2 = new Color(0x777777FF),
-            GRAY_1 = new Color(0xAAAAAAFF),
-            WHITE = new Color(0xFFFFFFFF),
-            T_BLACK = new Color(0xDD);
+            T_BLACK = new Color(0x99),
+            GREEN = new Color(0x00FF00FF);
 
 
     private static final LivingEntityGUI GUI = new LivingEntityGUI();
@@ -37,6 +35,7 @@ public class LivingEntityGUI extends GUIScreen
         GUIRectTabView tabView = new GUIRectTabView(this, 0, 0, 1, 1, "File", "Main", "Inventory", "Spawning", "AI", "Physics & Rendering", "Potions & Attributes", "Events", "NBT");
         guiElements.add(tabView);
 
+        //Add custom views inside tab views
         tabView.tabViews[0].add(new LivingEntityFileView(this, 0, 0, 1, 1, packet));
         tabView.tabViews[1].add(new LivingEntityMainView(this, 0, 0, 1, 1, packet));
         tabView.tabViews[2].add(new LivingEntityInventoryView(this, 0, 0, 1, 1, packet));

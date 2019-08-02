@@ -4,7 +4,7 @@ import com.fantasticsource.customentities.Network;
 import com.fantasticsource.mctools.gui.GUILeftClickEvent;
 import com.fantasticsource.mctools.gui.GUIScreen;
 import com.fantasticsource.mctools.gui.guielements.GUIElement;
-import com.fantasticsource.mctools.gui.guielements.rect.GUITextRect;
+import com.fantasticsource.mctools.gui.guielements.rect.GUITextButton;
 import com.fantasticsource.mctools.gui.guielements.rect.view.GUIRectView;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,7 +25,7 @@ public class LivingEntityFileView extends GUIRectView
     {
         super(screen, x, y, width, height);
 
-        createElement = new GUITextRect(screen, 0, 0, "Create", GRAY_2, GRAY_1, WHITE);
+        createElement = new GUITextButton(screen, 0, 0, "Create", GREEN);
         add(createElement);
     }
 
