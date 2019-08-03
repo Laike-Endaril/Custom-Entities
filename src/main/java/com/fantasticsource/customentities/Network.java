@@ -27,22 +27,8 @@ public class Network
     }
 
 
-    public static abstract class IEntityMessage implements IMessage
+    public static abstract class IEntityMessage extends LivingData implements IMessage
     {
-        //Backend
-        public boolean hasID;
-        public int entityID;
-
-        //Main
-        public String name;
-        public int homeDimension;
-        public Vec3d homePos, homeLookPos;
-        public float maxHP;
-
-        //Physics and Render
-        public float eyeHeight;
-
-
         @Override
         public void toBytes(ByteBuf buf)
         {

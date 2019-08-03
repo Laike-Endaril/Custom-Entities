@@ -3,6 +3,7 @@ package com.fantasticsource.customentities;
 import com.fantasticsource.customentities.blocksanditems.BlocksAndItems;
 import com.fantasticsource.customentities.blocksanditems.items.ItemEntityEditor;
 import com.fantasticsource.customentities.client.RenderCustomLiving;
+import com.fantasticsource.customentities.server.EntityTemplates;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
@@ -18,6 +19,8 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.relauncher.Side;
 
+import java.io.IOException;
+
 @Mod(modid = CustomEntities.MODID, name = CustomEntities.NAME, version = CustomEntities.VERSION, dependencies = "required-after:fantasticlib@[1.12.2.021a,)")
 public class CustomEntities
 {
@@ -26,7 +29,7 @@ public class CustomEntities
     public static final String VERSION = "1.12.2.000";
 
     @Mod.EventHandler
-    public static void preInit(FMLPreInitializationEvent event)
+    public static void preInit(FMLPreInitializationEvent event) throws IOException
     {
         MinecraftForge.EVENT_BUS.register(CustomEntities.class);
         MinecraftForge.EVENT_BUS.register(BlocksAndItems.class);
@@ -39,6 +42,8 @@ public class CustomEntities
         }
 
         Network.init();
+
+        EntityTemplates.load();
     }
 
     @SubscribeEvent
