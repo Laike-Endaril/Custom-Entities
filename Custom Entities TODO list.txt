@@ -25,7 +25,8 @@ If you press "Save" button for existing non-custom entity, and have changed cust
 ...Events tab (respawn, death, damage taken, damage dealt, healed, right clicked)
 
 File tab
-list of existing custom entities (sortable by distance <default>, name, faction, parent); always has special entries at the top (new entity)
+Inheritance map: list of entity template groups, entity templates, and existing custom entities
+List of existing custom entities (sortable by distance <default>, name, faction, parent); always has special entries at the top (new entity)
 create/save, load, delete
 
 AI Tab
@@ -41,15 +42,13 @@ a series of timed nodes, each of which is a time and scripting to run
 
 
 
-Scripting keywords...
-...this
-...other
-...parent
+Setting/scripting keywords...
+...other / o
+...parent / p
 
 Scripting vars...
 ...x, y, z
 ...xSpeed, ySpeed, zSpeed
-...
 
 Scripting methods (some arguments can be left blank)...
 ...command(command)
