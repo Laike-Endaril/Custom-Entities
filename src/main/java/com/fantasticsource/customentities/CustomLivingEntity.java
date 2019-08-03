@@ -80,20 +80,6 @@ public class CustomLivingEntity extends EntityLiving
     }
 
     @Override
-    public void onLivingUpdate()
-    {
-        super.onLivingUpdate();
-
-        if (!world.isRemote && isEntityAlive())
-        {
-            for (Entity felt : world.getEntitiesWithinAABBExcludingEntity(this, getEntityBoundingBox()))
-            {
-//                System.out.println(getName() + " collided with " + felt.getName());
-            }
-        }
-    }
-
-    @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound)
     {
         compound = super.writeToNBT(compound);
