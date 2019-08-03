@@ -22,14 +22,14 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-public class ItemLivingEntityEditor extends Item
+public class ItemEntityEditor extends Item
 {
-    public ItemLivingEntityEditor()
+    public ItemEntityEditor()
     {
         setCreativeTab(BlocksAndItems.creativeTab);
 
-        setUnlocalizedName(CustomEntities.MODID + ":livingentityeditor");
-        setRegistryName("livingentityeditor");
+        setUnlocalizedName(CustomEntities.MODID + ":entityeditor");
+        setRegistryName("entityeditor");
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -44,7 +44,7 @@ public class ItemLivingEntityEditor extends Item
         ItemStack itemStack;
         if (event.getHand() == EnumHand.MAIN_HAND) itemStack = player.getHeldItemMainhand();
         else itemStack = player.getHeldItemOffhand();
-        if (itemStack.getItem() != BlocksAndItems.livingentityeditor) return;
+        if (itemStack.getItem() != BlocksAndItems.entityeditor) return;
 
 
         //Success, but client stops here
@@ -72,7 +72,7 @@ public class ItemLivingEntityEditor extends Item
         ItemStack itemStack;
         if (event.getHand() == EnumHand.MAIN_HAND) itemStack = player.getHeldItemMainhand();
         else itemStack = player.getHeldItemOffhand();
-        if (itemStack.getItem() != BlocksAndItems.livingentityeditor) return;
+        if (itemStack.getItem() != BlocksAndItems.entityeditor) return;
 
 
         //Create mode, at position right clicked
@@ -107,7 +107,7 @@ public class ItemLivingEntityEditor extends Item
     {
         //Only if holding the entity editor
         ItemStack itemstack = hand == EnumHand.MAIN_HAND ? player.getHeldItemMainhand() : player.getHeldItemOffhand();
-        if (itemstack.getItem() != BlocksAndItems.livingentityeditor) return new ActionResult<>(EnumActionResult.FAIL, itemstack);
+        if (itemstack.getItem() != BlocksAndItems.entityeditor) return new ActionResult<>(EnumActionResult.FAIL, itemstack);
 
         //Success, but only server takes actions
         if (world.isRemote) return new ActionResult<>(EnumActionResult.SUCCESS, itemstack);

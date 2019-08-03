@@ -1,5 +1,4 @@
 Add text input filters...
-...none
 ...boolean
 ...math
 

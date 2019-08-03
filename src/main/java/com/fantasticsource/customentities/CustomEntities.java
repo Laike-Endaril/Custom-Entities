@@ -1,7 +1,7 @@
 package com.fantasticsource.customentities;
 
 import com.fantasticsource.customentities.blocksanditems.BlocksAndItems;
-import com.fantasticsource.customentities.blocksanditems.items.ItemLivingEntityEditor;
+import com.fantasticsource.customentities.blocksanditems.items.ItemEntityEditor;
 import com.fantasticsource.customentities.client.RenderCustomLiving;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -30,7 +30,7 @@ public class CustomEntities
     {
         MinecraftForge.EVENT_BUS.register(CustomEntities.class);
         MinecraftForge.EVENT_BUS.register(BlocksAndItems.class);
-        MinecraftForge.EVENT_BUS.register(ItemLivingEntityEditor.class);
+        MinecraftForge.EVENT_BUS.register(ItemEntityEditor.class);
 
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
         {

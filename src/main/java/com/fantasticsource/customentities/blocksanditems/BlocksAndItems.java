@@ -1,7 +1,7 @@
 package com.fantasticsource.customentities.blocksanditems;
 
 import com.fantasticsource.customentities.CustomEntities;
-import com.fantasticsource.customentities.blocksanditems.items.ItemLivingEntityEditor;
+import com.fantasticsource.customentities.blocksanditems.items.ItemEntityEditor;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -16,15 +16,15 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class BlocksAndItems
 {
-    @GameRegistry.ObjectHolder(CustomEntities.MODID + ":livingentityeditor")
-    public static ItemLivingEntityEditor livingentityeditor;
+    @GameRegistry.ObjectHolder(CustomEntities.MODID + ":entityeditor")
+    public static ItemEntityEditor entityeditor;
 
     public static CreativeTabs creativeTab = new CreativeTabs(CustomEntities.MODID)
     {
         @Override
         public ItemStack getTabIconItem()
         {
-            return new ItemStack(livingentityeditor);
+            return new ItemStack(entityeditor);
         }
 
         @Override
@@ -38,12 +38,12 @@ public class BlocksAndItems
     public static void itemRegistry(RegistryEvent.Register<Item> event)
     {
         IForgeRegistry<Item> registry = event.getRegistry();
-        registry.register(new ItemLivingEntityEditor());
+        registry.register(new ItemEntityEditor());
     }
 
     @SubscribeEvent
     public static void modelRegistry(ModelRegistryEvent event)
     {
-        ModelLoader.setCustomModelResourceLocation(livingentityeditor, 0, new ModelResourceLocation(CustomEntities.MODID + ":livingentityeditor", "inventory"));
+        ModelLoader.setCustomModelResourceLocation(entityeditor, 0, new ModelResourceLocation(CustomEntities.MODID + ":entityeditor", "inventory"));
     }
 }
