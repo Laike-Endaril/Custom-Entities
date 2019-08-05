@@ -1,6 +1,7 @@
 package com.fantasticsource.customentities;
 
 import com.fantasticsource.customentities.client.gui.LivingEntityGUI;
+import com.fantasticsource.customentities.data.LivingData;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLiving;
@@ -29,12 +30,16 @@ public class Network
 
     public static abstract class IEntityMessage extends LivingData implements IMessage
     {
+        //Backend
+        boolean hasEntityID;
+        int entityID;
+
         @Override
         public void toBytes(ByteBuf buf)
         {
             //Backend
-            buf.writeBoolean(hasID);
-            if (hasID) buf.writeInt(entityID);
+            buf.writeBoolean(hasEntityID);
+            if (hasEntityID) buf.writeInt(entityID);
 
             //Main
             ByteBufUtils.writeUTF8String(buf, name);
@@ -55,8 +60,8 @@ public class Network
         public void fromBytes(ByteBuf buf)
         {
             //Backend
-            hasID = buf.readBoolean();
-            if (hasID) entityID = buf.readInt();
+            hasEntityID = buf.readBoolean();
+            if (hasEntityID) entityID = buf.readInt();
 
             //Main
             name = ByteBufUtils.readUTF8String(buf);
@@ -80,7 +85,7 @@ public class Network
         public OpenLivingEntityGUIPacket(EntityLiving living)
         {
             //Backend
-            hasID = true;
+            hasEntityID = true;
             entityID = living.getEntityId();
 
             //Main
@@ -106,7 +111,7 @@ public class Network
         public OpenLivingEntityGUIPacket(EntityPlayerMP player)
         {
             //Backend
-            hasID = false;
+            hasEntityID = false;
 
             //Main
             name = "Custom Living Entity";
@@ -132,7 +137,7 @@ public class Network
         public OpenLivingEntityGUIPacket(Vec3d homePos, EntityPlayerMP player)
         {
             //Backend
-            hasID = false;
+            hasEntityID = false;
 
             //Main
             name = "Custom Living Entity";
@@ -177,8 +182,8 @@ public class Network
         public ApplyToLivingEntityPacket(OpenLivingEntityGUIPacket packet)
         {
             //Backend
-            hasID = packet.hasID;
-            if (hasID) entityID = packet.entityID;
+            hasEntityID = packet.hasEntityID;
+            if (hasEntityID) entityID = packet.entityID;
 
             //Main
             name = packet.name;

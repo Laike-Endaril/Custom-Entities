@@ -50,7 +50,7 @@ public class CustomLivingEntity extends EntityLiving
     {
         World world = DimensionManager.getWorld(packet.homeDimension);
 
-        if (!packet.hasID) world.spawnEntity(new CustomLivingEntity(packet));
+        if (!packet.hasEntityID) world.spawnEntity(new CustomLivingEntity(packet));
         else
         {
             //Edit existing entity

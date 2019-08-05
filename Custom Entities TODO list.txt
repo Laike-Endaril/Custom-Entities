@@ -1,3 +1,5 @@
+Link Components to GUI elements (the more complex of which would open submenus); would allow for a simple list of components
+
 Add text input filters...
 ...boolean
 ...math

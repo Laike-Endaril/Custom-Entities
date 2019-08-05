@@ -1,6 +1,6 @@
 package com.fantasticsource.customentities.server;
 
-import com.fantasticsource.customentities.LivingData;
+import com.fantasticsource.customentities.data.LivingTemplate;
 import com.fantasticsource.mctools.MCTools;
 
 import java.io.*;
@@ -10,7 +10,7 @@ public class EntityTemplates
 {
     private static final File fileLiving = new File(MCTools.getConfigDir() + "customentities_livingtemplates.dat");
 
-    public static LinkedHashMap<String, LivingData> livingEntities = new LinkedHashMap<>();
+    public static LinkedHashMap<String, LivingTemplate> livingEntities = new LinkedHashMap<>();
 
     public static void save() throws IOException
     {
@@ -18,9 +18,9 @@ public class EntityTemplates
 
         BufferedWriter bw = new BufferedWriter(new FileWriter(fileLiving));
 
-        for (LivingData data : livingEntities.values())
+        for (LivingTemplate data : livingEntities.values())
         {
-            data.write(bw);
+            data.writeGlobal(bw);
         }
 
         bw.close();
