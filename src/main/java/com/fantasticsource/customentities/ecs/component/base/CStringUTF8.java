@@ -12,14 +12,10 @@ public class CStringUTF8 extends Component
 {
     public String value;
 
-    public String get()
-    {
-        return value;
-    }
-
-    public void set(String value)
+    public CStringUTF8 set(String value)
     {
         this.value = value;
+        return this;
     }
 
     @Override
@@ -67,5 +63,11 @@ public class CStringUTF8 extends Component
     public void parse(String string)
     {
         value = string;
+    }
+
+    @Override
+    public Component copy()
+    {
+        return new CStringUTF8().set(new String(value));
     }
 }

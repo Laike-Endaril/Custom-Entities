@@ -10,14 +10,10 @@ public class CLong extends Component
 {
     public long value;
 
-    public long get()
-    {
-        return value;
-    }
-
-    public void set(long value)
+    public CLong set(long value)
     {
         this.value = value;
+        return this;
     }
 
     @Override
@@ -58,5 +54,11 @@ public class CLong extends Component
     public void parse(String string)
     {
         value = Long.parseLong(string);
+    }
+
+    @Override
+    public Component copy()
+    {
+        return new CLong().set(value);
     }
 }

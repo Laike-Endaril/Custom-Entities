@@ -10,14 +10,10 @@ public class CInt extends Component
 {
     public int value;
 
-    public int get()
-    {
-        return value;
-    }
-
-    public void set(int value)
+    public CInt set(int value)
     {
         this.value = value;
+        return this;
     }
 
     @Override
@@ -56,5 +52,11 @@ public class CInt extends Component
     public void parse(String string)
     {
         value = Integer.parseInt(string);
+    }
+
+    @Override
+    public Component copy()
+    {
+        return new CInt().set(value);
     }
 }

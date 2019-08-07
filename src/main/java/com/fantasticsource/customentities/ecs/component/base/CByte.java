@@ -10,14 +10,10 @@ public class CByte extends Component
 {
     public byte value;
 
-    public byte get()
-    {
-        return value;
-    }
-
-    public void set(byte value)
+    public CByte set(byte value)
     {
         this.value = value;
+        return this;
     }
 
     @Override
@@ -56,5 +52,11 @@ public class CByte extends Component
     public void parse(String string)
     {
         value = Byte.parseByte(string);
+    }
+
+    @Override
+    public Component copy()
+    {
+        return new CByte().set(value);
     }
 }

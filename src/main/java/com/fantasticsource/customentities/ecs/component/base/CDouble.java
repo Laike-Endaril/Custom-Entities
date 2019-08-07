@@ -10,14 +10,10 @@ public class CDouble extends Component
 {
     public double value;
 
-    public double get()
-    {
-        return value;
-    }
-
-    public void set(double value)
+    public CDouble set(double value)
     {
         this.value = value;
+        return this;
     }
 
     @Override
@@ -59,5 +55,11 @@ public class CDouble extends Component
     public void parse(String string)
     {
         value = Double.parseDouble(string);
+    }
+
+    @Override
+    public Component copy()
+    {
+        return new CDouble().set(value);
     }
 }

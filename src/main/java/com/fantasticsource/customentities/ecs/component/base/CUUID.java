@@ -11,14 +11,10 @@ public class CUUID extends Component
 {
     public UUID value;
 
-    public UUID get()
-    {
-        return value;
-    }
-
-    public void set(UUID value)
+    public CUUID set(UUID value)
     {
         this.value = value;
+        return this;
     }
 
     @Override
@@ -66,5 +62,11 @@ public class CUUID extends Component
     public void parse(String string)
     {
         value = UUID.fromString(string);
+    }
+
+    @Override
+    public Component copy()
+    {
+        return new CUUID().set(new UUID(value.getMostSignificantBits(), value.getLeastSignificantBits()));
     }
 }

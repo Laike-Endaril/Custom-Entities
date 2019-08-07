@@ -4,6 +4,7 @@ import com.fantasticsource.customentities.ecs.component.base.CDouble;
 import com.fantasticsource.customentities.ecs.component.base.CInt;
 import com.fantasticsource.customentities.ecs.component.base.Component;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.util.math.Vec3d;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,6 +14,40 @@ public class CPosition extends Component
 {
     CInt dimension = new CInt();
     CDouble[] coords = new CDouble[]{new CDouble(), new CDouble(), new CDouble()};
+
+    public int getDimension()
+    {
+        return dimension.value;
+    }
+
+    public double getX()
+    {
+        return coords[0].value;
+    }
+
+    public double getY()
+    {
+        return coords[1].value;
+    }
+
+    public double getZ()
+    {
+        return coords[2].value;
+    }
+
+    public Vec3d getPosition()
+    {
+        return new Vec3d(coords[0].value, coords[1].value, coords[2].value);
+    }
+
+    public CPosition set(int dimension, double x, double y, double z)
+    {
+        this.dimension.value = dimension;
+        this.coords[0].value = x;
+        this.coords[1].value = y;
+        this.coords[2].value = z;
+        return this;
+    }
 
     @Override
     public void write(ByteBuf buf)
@@ -62,5 +97,11 @@ public class CPosition extends Component
     public String label()
     {
         return "Position";
+    }
+
+    @Override
+    public Component copy()
+    {
+        return new CPosition().set(dimension.value, coords[0].value, coords[1].value, coords[2].value);
     }
 }

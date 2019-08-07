@@ -10,14 +10,10 @@ public class CFloat extends Component
 {
     public float value;
 
-    public float get()
-    {
-        return value;
-    }
-
-    public void set(float value)
+    public CFloat set(float value)
     {
         this.value = value;
+        return this;
     }
 
     @Override
@@ -57,5 +53,11 @@ public class CFloat extends Component
     public void parse(String string)
     {
         value = Float.parseFloat(string);
+    }
+
+    @Override
+    public Component copy()
+    {
+        return new CFloat().set(value);
     }
 }

@@ -21,6 +21,8 @@ public abstract class Component
      */
     public abstract void parse(String string);
 
+    public abstract Component copy();
+
     /**
      * The label for this component when editing it via GUI
      */
