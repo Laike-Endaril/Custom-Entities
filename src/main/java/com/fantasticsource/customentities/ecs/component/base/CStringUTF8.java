@@ -36,9 +36,10 @@ public class CStringUTF8 extends Component
     @Override
     public void save(FileOutputStream stream) throws IOException
     {
-        int length = value.length();
+        byte[] bytes = value.getBytes(UTF_8);
+        int length = bytes.length;
         stream.write(new byte[]{(byte) (length >>> 24), (byte) (length >>> 16), (byte) (length >>> 8), (byte) length});
-        stream.write(value.getBytes(UTF_8));
+        stream.write(bytes);
     }
 
     @Override
