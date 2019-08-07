@@ -82,8 +82,8 @@ public class CVec3D extends Component
     {
         String[] tokens = string.split(",");
         x.parse(tokens[0].trim());
-        y.parse(tokens[0].trim());
-        z.parse(tokens[0].trim());
+        y.parse(tokens[1].trim());
+        z.parse(tokens[2].trim());
     }
 
     @Override
