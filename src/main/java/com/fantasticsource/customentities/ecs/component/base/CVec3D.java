@@ -1,7 +1,5 @@
-package com.fantasticsource.customentities.ecs.component;
+package com.fantasticsource.customentities.ecs.component.base;
 
-import com.fantasticsource.customentities.ecs.component.base.CDouble;
-import com.fantasticsource.customentities.ecs.component.base.Component;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.util.math.Vec3d;
 
