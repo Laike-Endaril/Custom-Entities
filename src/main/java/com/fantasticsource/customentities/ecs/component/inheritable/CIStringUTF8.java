@@ -16,7 +16,7 @@ public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
     public void updateValidity()
     {
         boolean notEmpty = false;
-        String[] tokens = value.split("[+]");
+        String[] tokens = value.split("\\+");
         for (String token : tokens)
         {
             token = token.trim();
@@ -50,7 +50,7 @@ public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
     public CStringUTF8 getCalculatedComponent()
     {
         StringBuilder result = new StringBuilder();
-        String[] tokens = value.split("[+]");
+        String[] tokens = value.split("\\+");
         for (String token : tokens)
         {
             token = token.trim();
