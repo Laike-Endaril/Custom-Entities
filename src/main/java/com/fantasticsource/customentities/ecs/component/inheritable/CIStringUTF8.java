@@ -5,7 +5,7 @@ import com.fantasticsource.customentities.ecs.entity.Entity;
 
 public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
 {
-    private static final String validChars = "abcdefghijklmnopqrstuvwxyz0123456789_ ";
+    private static final String stringChars = "abcdefghijklmnopqrstuvwxyz0123456789_ ";
 
     public CIStringUTF8(Entity parent, Class<CStringUTF8> componentClass)
     {
@@ -32,9 +32,9 @@ public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
                 return;
             }
 
-            for (char c : token.toCharArray())
+            for (char c : token.toLowerCase().toCharArray())
             {
-                if (!validChars.contains("" + c))
+                if (!stringChars.contains("" + c))
                 {
                     valid = false;
                     return;
@@ -69,9 +69,9 @@ public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
                 return null;
             }
 
-            for (char c : token.toCharArray())
+            for (char c : token.toLowerCase().toCharArray())
             {
-                if (!validChars.contains("" + c))
+                if (!stringChars.contains("" + c))
                 {
                     valid = false;
                     return null;
