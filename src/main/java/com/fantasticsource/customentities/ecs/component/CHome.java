@@ -84,4 +84,10 @@ public class CHome extends Component
     {
         return new CHome().setDimension(dimension.value).setPosition(position.x.value, position.y.value, position.z.value).setLookPosition(lookPosition.x.value, lookPosition.y.value, lookPosition.z.value);
     }
+
+    @Override
+    public String label()
+    {
+        return "Home";
+    }
 }
