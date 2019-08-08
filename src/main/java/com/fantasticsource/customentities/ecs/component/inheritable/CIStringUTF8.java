@@ -57,7 +57,7 @@ public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
 
             if (token.equals("p"))
             {
-                token = parent.get(componentClass).toString();
+                token = parent.get(calculatedComponentClass).toString();
             }
             else if (token.charAt(0) == '"' && token.charAt(token.length() - 1) == '"')
             {
