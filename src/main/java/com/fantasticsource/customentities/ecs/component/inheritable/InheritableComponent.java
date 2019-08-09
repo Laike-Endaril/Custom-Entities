@@ -2,15 +2,15 @@ package com.fantasticsource.customentities.ecs.component.inheritable;
 
 import com.fantasticsource.customentities.ecs.component.base.CStringUTF8;
 import com.fantasticsource.customentities.ecs.component.base.Component;
-import com.fantasticsource.customentities.ecs.entity.Entity;
+import com.fantasticsource.customentities.ecs.entity.ECSEntity;
 
 public abstract class InheritableComponent<T extends Component> extends CStringUTF8
 {
-    protected final Entity parent;
+    protected final ECSEntity parent;
     protected final Class<T> calculatedComponentClass;
     protected boolean valid = false;
 
-    public InheritableComponent(Entity parent, Class<T> calculatedComponentClass)
+    public InheritableComponent(ECSEntity parent, Class<T> calculatedComponentClass)
     {
         this.parent = parent;
         this.calculatedComponentClass = calculatedComponentClass;

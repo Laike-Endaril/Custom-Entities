@@ -11,11 +11,11 @@ import java.util.Map;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-public class Entity
+public class ECSEntity
 {
     private LinkedHashMap<Class<? extends Component>, Component> components = new LinkedHashMap<>();
 
-    public Entity(Component... components)
+    public ECSEntity(Component... components)
     {
         for (Component component : components) this.components.put(component.getClass(), component);
     }
@@ -99,9 +99,9 @@ public class Entity
         }
     }
 
-    public Entity copy()
+    public ECSEntity copy()
     {
-        Entity result = new Entity();
+        ECSEntity result = new ECSEntity();
         for (Component component : components.values())
         {
             result.put(component.copy());

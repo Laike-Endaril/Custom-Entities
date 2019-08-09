@@ -1,7 +1,7 @@
 package com.fantasticsource.customentities.ecs.component.inheritable;
 
 import com.fantasticsource.customentities.ecs.component.base.CDouble;
-import com.fantasticsource.customentities.ecs.entity.Entity;
+import com.fantasticsource.customentities.ecs.entity.ECSEntity;
 import com.fantasticsource.tools.Tools;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CIDouble extends InheritableComponent<CDouble>
 {
-    public CIDouble(Entity parent, Class<CDouble> componentClass)
+    public CIDouble(ECSEntity parent, Class<CDouble> componentClass)
     {
         super(parent, componentClass);
     }
