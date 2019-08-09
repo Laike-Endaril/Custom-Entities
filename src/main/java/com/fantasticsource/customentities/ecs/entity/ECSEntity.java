@@ -25,9 +25,9 @@ public class ECSEntity
         return components.put(component.getClass(), component);
     }
 
-    public Component get(Class<? extends Component> componentClass)
+    public <T extends Component> T get(Class<T> componentClass)
     {
-        return components.get(componentClass);
+        return (T) components.get(componentClass);
     }
 
     public boolean has(Class<? extends Component> componentClass)
