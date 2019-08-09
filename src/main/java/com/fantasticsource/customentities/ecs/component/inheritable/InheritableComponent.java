@@ -33,7 +33,7 @@ public abstract class InheritableComponent<T extends Component> extends CStringU
 
     public final T getParentCalculatedComponent()
     {
-        return ((InheritableComponent<T>) parent.get(getCalculatedComponentClass())).getCalculatedComponent();
+        return ((InheritableComponent<T>) parent.get(getClass())).getCalculatedComponent();
     }
 
     /**
