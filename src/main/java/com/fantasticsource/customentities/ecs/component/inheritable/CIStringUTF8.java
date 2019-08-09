@@ -2,10 +2,11 @@ package com.fantasticsource.customentities.ecs.component.inheritable;
 
 import com.fantasticsource.customentities.ecs.component.base.CStringUTF8;
 import com.fantasticsource.customentities.ecs.entity.Entity;
+import com.fantasticsource.tools.Tools;
 
 public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
 {
-    private static final String stringChars = "abcdefghijklmnopqrstuvwxyz0123456789_ ";
+    private static final String validChars = "abcdefghijklmnopqrstuvwxyz0123456789_ ";
 
     public CIStringUTF8(Entity parent, Class<CStringUTF8> componentClass)
     {
@@ -16,7 +17,7 @@ public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
     public void updateValidity()
     {
         boolean notEmpty = false;
-        String[] tokens = value.split("\\+");
+        String[] tokens = Tools.fixedSplit(value, "\\+");
         for (String token : tokens)
         {
             token = token.trim();
@@ -34,7 +35,7 @@ public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
 
             for (char c : token.toLowerCase().toCharArray())
             {
-                if (!stringChars.contains("" + c))
+                if (!validChars.contains("" + c))
                 {
                     valid = false;
                     return;
@@ -50,7 +51,7 @@ public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
     public CStringUTF8 getCalculatedComponent()
     {
         StringBuilder result = new StringBuilder();
-        String[] tokens = value.split("\\+");
+        String[] tokens = Tools.fixedSplit(value, "\\+");
         for (String token : tokens)
         {
             token = token.trim();
@@ -71,7 +72,7 @@ public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
 
             for (char c : token.toLowerCase().toCharArray())
             {
-                if (!stringChars.contains("" + c))
+                if (!validChars.contains("" + c))
                 {
                     valid = false;
                     return null;
