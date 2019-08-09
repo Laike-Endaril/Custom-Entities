@@ -4,6 +4,10 @@ import com.fantasticsource.customentities.ecs.component.base.CDouble;
 import com.fantasticsource.customentities.ecs.entity.Entity;
 import com.fantasticsource.tools.Tools;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class CIDouble extends InheritableComponent<CDouble>
 {
     public CIDouble(Entity parent, Class<CDouble> componentClass)
@@ -49,63 +53,68 @@ public class CIDouble extends InheritableComponent<CDouble>
     @Override
     public CDouble getCalculatedComponent()
     {
-        String[] tokens = Tools.preservedSplit(value, "[+\\-*/]");
-        String token = tokens[0].trim();
-        double result = token == "p" ? getParentCalculatedComponent().value : Double.parseDouble(token);
+        String[][] tokenArrays = Tools.preservedSplitSeparated(value, "[+\\-*/]");
 
-        boolean shouldBeOperator = true;
-        for (int i = 1; i < tokens.length; i++)
+        ArrayList<Double> values = new ArrayList<>();
+        for (String s : tokenArrays[0])
         {
-            token = tokens[i].trim();
-            if (shouldBeOperator)
+            s = s.trim();
+            if (s.equals(""))
             {
-                if (token == "*")
+                valid = false;
+                return null;
+            }
+            else if (s.equals("p"))
+            {
+                values.add(getParentCalculatedComponent().value);
+            }
+            else
+            {
+                try
                 {
-                    //TODO
+                    double d = Double.parseDouble(s);
+                    values.add(d);
                 }
-                else if (token == "/")
-                {
-                    //TODO
-                }
-                else if (token == "+")
-                {
-                    //TODO
-                }
-                else if (token == "-")
-                {
-                    //TODO
-                }
-                else
+                catch (NumberFormatException e)
                 {
                     valid = false;
                     return null;
                 }
             }
-            else
-            {
-                if (token == "p")
-                {
-                    //TODO
-                }
-                else
-                {
-                    try
-                    {
-                        double d = Double.parseDouble(token);
-                        //TODO
-                    }
-                    catch (NumberFormatException e)
-                    {
-                        valid = false;
-                        return null;
-                    }
-                }
-            }
-
-            shouldBeOperator = !shouldBeOperator;
         }
 
-        valid = true;
-        return new CDouble().set(result);
+
+        List<String> operators = Arrays.asList(tokenArrays[1]);
+
+        int index = Tools.min(operators.indexOf("*"), operators.indexOf("/"));
+        while (index >= 0)
+        {
+            if (operators.remove(index).equals("*"))
+            {
+                values.set(index, values.get(index) * values.remove(index + 1));
+            }
+            else
+            {
+                values.set(index, values.get(index) / values.remove(index + 1));
+            }
+            index = Tools.min(operators.indexOf("*"), operators.indexOf("/"));
+        }
+
+        index = Tools.min(operators.indexOf("+"), operators.indexOf("-"));
+        while (index >= 0)
+        {
+            if (operators.remove(index).equals("+"))
+            {
+                values.set(index, values.get(index) + values.remove(index + 1));
+            }
+            else
+            {
+                values.set(index, values.get(index) - values.remove(index + 1));
+            }
+            index = Tools.min(operators.indexOf("+"), operators.indexOf("-"));
+        }
+
+
+        return new CDouble().set(values.get(0));
     }
 }
