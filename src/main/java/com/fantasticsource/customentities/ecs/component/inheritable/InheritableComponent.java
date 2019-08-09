@@ -31,6 +31,11 @@ public abstract class InheritableComponent<T extends Component> extends CStringU
      */
     public abstract T getCalculatedComponent();
 
+    public final T getParentCalculatedComponent()
+    {
+        return ((InheritableComponent<T>) parent.get(getCalculatedComponentClass())).getCalculatedComponent();
+    }
+
     /**
      * @return Cached validity boolean; make sure to call updateValidity() when internal String is changed
      */

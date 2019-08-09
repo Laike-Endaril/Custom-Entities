@@ -17,8 +17,7 @@ public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
     public void updateValidity()
     {
         boolean notEmpty = false;
-        String[] tokens = Tools.fixedSplit(value, "\\+");
-        for (String token : tokens)
+        for (String token : Tools.fixedSplit(value, "\\+"))
         {
             token = token.trim();
 
@@ -51,14 +50,13 @@ public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
     public CStringUTF8 getCalculatedComponent()
     {
         StringBuilder result = new StringBuilder();
-        String[] tokens = Tools.fixedSplit(value, "\\+");
-        for (String token : tokens)
+        for (String token : Tools.fixedSplit(value, "\\+"))
         {
             token = token.trim();
 
             if (token.equals("p"))
             {
-                token = parent.get(calculatedComponentClass).toString();
+                token = getParentCalculatedComponent().value;
             }
             else if (token.charAt(0) == '"' && token.charAt(token.length() - 1) == '"')
             {
@@ -67,6 +65,7 @@ public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
 
             if (token.equals(""))
             {
+                valid = false;
                 return null;
             }
 
@@ -82,6 +81,7 @@ public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
             result.append(token);
         }
 
+        valid = true;
         return new CStringUTF8().set(result.toString().trim());
     }
 }
