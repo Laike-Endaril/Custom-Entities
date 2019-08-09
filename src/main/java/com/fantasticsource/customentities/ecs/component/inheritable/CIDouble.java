@@ -6,7 +6,6 @@ import com.fantasticsource.tools.Tools;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class CIDouble extends InheritableComponent<CDouble>
 {
@@ -84,9 +83,10 @@ public class CIDouble extends InheritableComponent<CDouble>
         }
 
 
-        List<String> operators = Arrays.asList(tokenArrays[1]);
+        ArrayList<String> operators = new ArrayList<>(Arrays.asList(tokenArrays[1]));
 
-        int index = Tools.min(operators.indexOf("*"), operators.indexOf("/"));
+        int index1 = operators.indexOf("*"), index2 = operators.indexOf("/");
+        int index = index1 == -1 ? index2 : index2 == -1 ? index1 : Tools.min(index1, index2);
         while (index >= 0)
         {
             if (operators.remove(index).equals("*"))
@@ -97,10 +97,15 @@ public class CIDouble extends InheritableComponent<CDouble>
             {
                 values.set(index, values.get(index) / values.remove(index + 1));
             }
-            index = Tools.min(operators.indexOf("*"), operators.indexOf("/"));
+
+            index1 = operators.indexOf("*");
+            index2 = operators.indexOf("/");
+            index = index1 == -1 ? index2 : index2 == -1 ? index1 : Tools.min(index1, index2);
         }
 
-        index = Tools.min(operators.indexOf("+"), operators.indexOf("-"));
+        index1 = operators.indexOf("+");
+        index2 = operators.indexOf("-");
+        index = index1 == -1 ? index2 : index2 == -1 ? index1 : Tools.min(index1, index2);
         while (index >= 0)
         {
             if (operators.remove(index).equals("+"))
@@ -111,7 +116,10 @@ public class CIDouble extends InheritableComponent<CDouble>
             {
                 values.set(index, values.get(index) - values.remove(index + 1));
             }
-            index = Tools.min(operators.indexOf("+"), operators.indexOf("-"));
+
+            index1 = operators.indexOf("+");
+            index2 = operators.indexOf("-");
+            index = index1 == -1 ? index2 : index2 == -1 ? index1 : Tools.min(index1, index2);
         }
 
 
