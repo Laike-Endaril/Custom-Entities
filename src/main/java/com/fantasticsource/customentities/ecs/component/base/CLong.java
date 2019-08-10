@@ -1,5 +1,6 @@
 package com.fantasticsource.customentities.ecs.component.base;
 
+import com.fantasticsource.customentities.ecs.entity.ECSEntity;
 import io.netty.buffer.ByteBuf;
 
 import java.io.FileInputStream;
@@ -9,6 +10,11 @@ import java.io.IOException;
 public class CLong extends Component
 {
     public long value;
+
+    public CLong(ECSEntity entity)
+    {
+        super(entity);
+    }
 
     public CLong set(long value)
     {
@@ -57,8 +63,8 @@ public class CLong extends Component
     }
 
     @Override
-    public Component copy()
+    public CLong copy()
     {
-        return new CLong().set(value);
+        return new CLong(entity).set(value);
     }
 }

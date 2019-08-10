@@ -1,5 +1,6 @@
 package com.fantasticsource.customentities.ecs.component.base;
 
+import com.fantasticsource.customentities.ecs.entity.ECSEntity;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.util.math.Vec3d;
 
@@ -9,7 +10,15 @@ import java.io.IOException;
 
 public class CVec3D extends Component
 {
-    public CDouble x = new CDouble(), y = new CDouble(), z = new CDouble();
+    public CDouble x, y, z;
+
+    public CVec3D(ECSEntity entity)
+    {
+        super(entity);
+        x = new CDouble(entity);
+        y = new CDouble(entity);
+        z = new CDouble(entity);
+    }
 
     public double getX()
     {
@@ -93,8 +102,8 @@ public class CVec3D extends Component
     }
 
     @Override
-    public Component copy()
+    public CVec3D copy()
     {
-        return new CVec3D().set(x.value, y.value, z.value);
+        return new CVec3D(entity).set(x.value, y.value, z.value);
     }
 }

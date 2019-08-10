@@ -9,9 +9,10 @@ import java.util.Arrays;
 
 public class CIDouble extends InheritableComponent<CDouble>
 {
-    public CIDouble(ECSEntity parent, Class<CDouble> componentClass)
+    public CIDouble(ECSEntity entity)
     {
-        super(parent, componentClass);
+        super(entity);
+        calculatedComponentClass = CDouble.class;
     }
 
     @Override
@@ -123,6 +124,18 @@ public class CIDouble extends InheritableComponent<CDouble>
         }
 
 
-        return new CDouble().set(values.get(0));
+        return new CDouble(entity).set(values.get(0));
+    }
+
+    @Override
+    public CIDouble set(String value)
+    {
+        return (CIDouble) super.set(value);
+    }
+
+    @Override
+    public CIDouble copy()
+    {
+        return new CIDouble(entity).set(value);
     }
 }

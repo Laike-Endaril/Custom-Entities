@@ -1,5 +1,6 @@
 package com.fantasticsource.customentities.ecs.component.base;
 
+import com.fantasticsource.customentities.ecs.entity.ECSEntity;
 import io.netty.buffer.ByteBuf;
 
 import java.io.FileInputStream;
@@ -11,6 +12,11 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class CStringUTF8 extends Component
 {
     public String value;
+
+    public CStringUTF8(ECSEntity entity)
+    {
+        super(entity);
+    }
 
     public CStringUTF8 set(String value)
     {
@@ -67,8 +73,8 @@ public class CStringUTF8 extends Component
     }
 
     @Override
-    public Component copy()
+    public CStringUTF8 copy()
     {
-        return new CStringUTF8().set(new String(value));
+        return new CStringUTF8(entity).set(value);
     }
 }

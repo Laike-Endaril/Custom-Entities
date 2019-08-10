@@ -6,14 +6,12 @@ import com.fantasticsource.customentities.ecs.entity.ECSEntity;
 
 public abstract class InheritableComponent<T extends Component> extends CStringUTF8
 {
-    protected final ECSEntity parent;
-    protected final Class<T> calculatedComponentClass;
+    protected Class<T> calculatedComponentClass;
     protected boolean valid = false;
 
-    public InheritableComponent(ECSEntity parent, Class<T> calculatedComponentClass)
+    public InheritableComponent(ECSEntity entity)
     {
-        this.parent = parent;
-        this.calculatedComponentClass = calculatedComponentClass;
+        super(entity);
     }
 
     public final Class<T> getCalculatedComponentClass()
@@ -33,7 +31,7 @@ public abstract class InheritableComponent<T extends Component> extends CStringU
 
     public final T getParentCalculatedComponent()
     {
-        return ((InheritableComponent<T>) parent.get(getClass())).getCalculatedComponent();
+        return ((InheritableComponent<T>) entity.parent.get(getClass())).getCalculatedComponent();
     }
 
     /**

@@ -13,10 +13,13 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class ECSEntity
 {
+    public ECSEntity parent;
+
     private LinkedHashMap<Class<? extends Component>, Component> components = new LinkedHashMap<>();
 
-    public ECSEntity(Component... components)
+    public ECSEntity(ECSEntity parent, Component... components)
     {
+        this.parent = parent;
         for (Component component : components) this.components.put(component.getClass(), component);
     }
 
@@ -101,11 +104,8 @@ public class ECSEntity
 
     public ECSEntity copy()
     {
-        ECSEntity result = new ECSEntity();
-        for (Component component : components.values())
-        {
-            result.put(component.copy());
-        }
+        ECSEntity result = new ECSEntity(parent);
+        for (Component component : components.values()) component.copyTo(result);
         return result;
     }
 }

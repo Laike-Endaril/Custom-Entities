@@ -1,5 +1,6 @@
 package com.fantasticsource.customentities.ecs.component.base;
 
+import com.fantasticsource.customentities.ecs.entity.ECSEntity;
 import io.netty.buffer.ByteBuf;
 
 import java.io.FileInputStream;
@@ -9,6 +10,11 @@ import java.io.IOException;
 public class CBoolean extends Component
 {
     public boolean value;
+
+    public CBoolean(ECSEntity entity)
+    {
+        super(entity);
+    }
 
     public CBoolean set(boolean value)
     {
@@ -55,8 +61,8 @@ public class CBoolean extends Component
     }
 
     @Override
-    public Component copy()
+    public CBoolean copy()
     {
-        return new CBoolean().set(value);
+        return new CBoolean(entity).set(value);
     }
 }

@@ -8,9 +8,10 @@ public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
 {
     private static final String validChars = "abcdefghijklmnopqrstuvwxyz0123456789_ ";
 
-    public CIStringUTF8(ECSEntity parent, Class<CStringUTF8> componentClass)
+    public CIStringUTF8(ECSEntity entity)
     {
-        super(parent, componentClass);
+        super(entity);
+        calculatedComponentClass = CStringUTF8.class;
     }
 
     @Override
@@ -60,7 +61,7 @@ public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
             }
             else if (token.charAt(0) == '"' && token.charAt(token.length() - 1) == '"')
             {
-                token = token.substring(1, token.length() - 2);
+                token = token.substring(1, token.length() - 1);
             }
 
             if (token.equals(""))
@@ -82,6 +83,18 @@ public class CIStringUTF8 extends InheritableComponent<CStringUTF8>
         }
 
         valid = true;
-        return new CStringUTF8().set(result.toString().trim());
+        return new CStringUTF8(entity).set(result.toString().trim());
+    }
+
+    @Override
+    public CIStringUTF8 set(String value)
+    {
+        return (CIStringUTF8) super.set(value);
+    }
+
+    @Override
+    public CIStringUTF8 copy()
+    {
+        return new CIStringUTF8(entity).set(value);
     }
 }

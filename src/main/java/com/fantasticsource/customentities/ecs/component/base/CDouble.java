@@ -1,5 +1,6 @@
 package com.fantasticsource.customentities.ecs.component.base;
 
+import com.fantasticsource.customentities.ecs.entity.ECSEntity;
 import io.netty.buffer.ByteBuf;
 
 import java.io.FileInputStream;
@@ -9,6 +10,11 @@ import java.io.IOException;
 public class CDouble extends Component
 {
     public double value;
+
+    public CDouble(ECSEntity entity)
+    {
+        super(entity);
+    }
 
     public CDouble set(double value)
     {
@@ -58,8 +64,8 @@ public class CDouble extends Component
     }
 
     @Override
-    public Component copy()
+    public CDouble copy()
     {
-        return new CDouble().set(value);
+        return new CDouble(entity).set(value);
     }
 }

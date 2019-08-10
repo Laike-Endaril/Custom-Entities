@@ -1,5 +1,6 @@
 package com.fantasticsource.customentities.ecs.component.base;
 
+import com.fantasticsource.customentities.ecs.entity.ECSEntity;
 import io.netty.buffer.ByteBuf;
 
 import java.io.FileInputStream;
@@ -8,6 +9,13 @@ import java.io.IOException;
 
 public abstract class Component
 {
+    public ECSEntity entity;
+
+    public Component(ECSEntity entity)
+    {
+        this.entity = entity;
+    }
+
     public abstract void write(ByteBuf buf);
 
     public abstract void read(ByteBuf buf);
@@ -22,6 +30,13 @@ public abstract class Component
     public abstract void parse(String string);
 
     public abstract Component copy();
+
+    public final void copyTo(ECSEntity entity)
+    {
+        Component c = copy();
+        c.entity = entity;
+        entity.put(c);
+    }
 
     /**
      * The label for this component when editing it via GUI

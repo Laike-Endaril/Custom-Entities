@@ -1,5 +1,6 @@
 package com.fantasticsource.customentities.ecs.component.base;
 
+import com.fantasticsource.customentities.ecs.entity.ECSEntity;
 import io.netty.buffer.ByteBuf;
 
 import java.io.FileInputStream;
@@ -9,6 +10,11 @@ import java.io.IOException;
 public class CByte extends Component
 {
     public byte value;
+
+    public CByte(ECSEntity entity)
+    {
+        super(entity);
+    }
 
     public CByte set(byte value)
     {
@@ -55,8 +61,8 @@ public class CByte extends Component
     }
 
     @Override
-    public Component copy()
+    public CByte copy()
     {
-        return new CByte().set(value);
+        return new CByte(entity).set(value);
     }
 }

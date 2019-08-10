@@ -3,6 +3,7 @@ package com.fantasticsource.customentities.ecs.component;
 import com.fantasticsource.customentities.ecs.component.base.CInt;
 import com.fantasticsource.customentities.ecs.component.base.CVec3D;
 import com.fantasticsource.customentities.ecs.component.base.Component;
+import com.fantasticsource.customentities.ecs.entity.ECSEntity;
 import io.netty.buffer.ByteBuf;
 
 import java.io.FileInputStream;
@@ -11,8 +12,13 @@ import java.io.IOException;
 
 public class CHome extends Component
 {
-    public CInt dimension = new CInt();
-    public CVec3D position = new CVec3D(), lookPosition = new CVec3D();
+    public CInt dimension = new CInt(entity);
+    public CVec3D position = new CVec3D(entity), lookPosition = new CVec3D(entity);
+
+    public CHome(ECSEntity entity)
+    {
+        super(entity);
+    }
 
     public CHome setDimension(int dimension)
     {
@@ -80,9 +86,9 @@ public class CHome extends Component
     }
 
     @Override
-    public Component copy()
+    public CHome copy()
     {
-        return new CHome().setDimension(dimension.value).setPosition(position.x.value, position.y.value, position.z.value).setLookPosition(lookPosition.x.value, lookPosition.y.value, lookPosition.z.value);
+        return new CHome(entity).setDimension(dimension.value).setPosition(position.x.value, position.y.value, position.z.value).setLookPosition(lookPosition.x.value, lookPosition.y.value, lookPosition.z.value);
     }
 
     @Override

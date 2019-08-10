@@ -1,5 +1,6 @@
 package com.fantasticsource.customentities.ecs.component.base;
 
+import com.fantasticsource.customentities.ecs.entity.ECSEntity;
 import io.netty.buffer.ByteBuf;
 
 import java.io.FileInputStream;
@@ -10,6 +11,11 @@ import java.util.UUID;
 public class CUUID extends Component
 {
     public UUID value;
+
+    public CUUID(ECSEntity entity)
+    {
+        super(entity);
+    }
 
     public CUUID set(UUID value)
     {
@@ -65,8 +71,8 @@ public class CUUID extends Component
     }
 
     @Override
-    public Component copy()
+    public CUUID copy()
     {
-        return new CUUID().set(new UUID(value.getMostSignificantBits(), value.getLeastSignificantBits()));
+        return new CUUID(entity).set(new UUID(value.getMostSignificantBits(), value.getLeastSignificantBits()));
     }
 }

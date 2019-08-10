@@ -1,5 +1,6 @@
 package com.fantasticsource.customentities.ecs.component.base;
 
+import com.fantasticsource.customentities.ecs.entity.ECSEntity;
 import io.netty.buffer.ByteBuf;
 
 import java.io.FileInputStream;
@@ -9,6 +10,11 @@ import java.io.IOException;
 public class CInt extends Component
 {
     public int value;
+
+    public CInt(ECSEntity entity)
+    {
+        super(entity);
+    }
 
     public CInt set(int value)
     {
@@ -55,8 +61,8 @@ public class CInt extends Component
     }
 
     @Override
-    public Component copy()
+    public CInt copy()
     {
-        return new CInt().set(value);
+        return new CInt(entity).set(value);
     }
 }

@@ -1,5 +1,6 @@
 package com.fantasticsource.customentities.ecs.component.base;
 
+import com.fantasticsource.customentities.ecs.entity.ECSEntity;
 import io.netty.buffer.ByteBuf;
 
 import java.io.FileInputStream;
@@ -9,6 +10,11 @@ import java.io.IOException;
 public class CFloat extends Component
 {
     public float value;
+
+    public CFloat(ECSEntity entity)
+    {
+        super(entity);
+    }
 
     public CFloat set(float value)
     {
@@ -56,8 +62,8 @@ public class CFloat extends Component
     }
 
     @Override
-    public Component copy()
+    public CFloat copy()
     {
-        return new CFloat().set(value);
+        return new CFloat(entity).set(value);
     }
 }
