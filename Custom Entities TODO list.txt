@@ -1,5 +1,26 @@
 Link Components to GUI elements (the more complex of which would open submenus); would allow for a simple list of components
 
+
+
+ENTITY TEMPLATES
+Sets of entity data that do not belong to a particular entity or entities, but can be referred to as a parent in other entities to inherit values from
+Shared between worlds
+Stored in config folder
+
+PERSISTENT ENTITIES
+Each of these is a singular, respawning existence, and a reference to it from another mod persists through the death -> respawn cycle
+Persistent entities do not despawn
+Can reference a template as a parent, or not.  CANNOT reference another persistent entity as a parent
+Stored in a world-specific data folder (not dimension-specific storage).  Reference the world save folder of the world containing them (not the dim ID, since that can technically change)
+
+RANDOM SPAWNS
+Each of these consists of one or more zones and one or more entities to spawn in those zones, as well as weights and limits
+Each zone is a rectangular prism, for efficiency
+Entities spawned this way are non-persistent. They can despawn or die permanently, and they are disposed of in the vanilla MC way; they do not come back with the same entity object or UUID
+Stored in a world-specific data folder (not dimension-specific storage).  Reference the world save folder of the world containing them (not the dim ID, since that can technically change)
+
+
+
 Add text input filters...
 ...boolean
 ...math
@@ -20,7 +41,7 @@ If you press "Save" button for existing non-custom entity, and have changed cust
 ...File tab (see below)
 ...Main tab (parent entity, name, title, hp, armor, speed, xp, faction)
 ...Inventory tab (also includes drops)
-...Spawning tab (home dim/position/look vector, respawn cooldown, respawn conditions <time of day, moon phase>)
+...Spawning tab (home dim/position/look vector, respawn cooldown, respawn conditions <time of day, moon phase, on block types (eg. grass), in block types (eg. water/air/lava)>, etc.)
 ...AI tab (holy crap...see below)
 ...Physics & Rendering tab (pathfinding type, base hitbox w/h, base render scale x/y/z, global scaling w/h, visibility, texture, draw mode, blend)
 ...Attributes & Potions tab
@@ -31,7 +52,7 @@ Inheritance map: list of entity template groups, entity templates, and existing 
 List of existing custom entities (sortable by distance <default>, name, faction, parent); always has special entries at the top (new entity)
 create/save, load, delete
 
-AI Tab
+AI tab
 targeting conditions (targetTasks)
 combat actions (tasks, high priority) (actions, conditions <hp, cooldown>)
 idle actions (tasks, low priority) (stand/look / wander (w/ option for step-up/down and area) / patrol route, animation)
