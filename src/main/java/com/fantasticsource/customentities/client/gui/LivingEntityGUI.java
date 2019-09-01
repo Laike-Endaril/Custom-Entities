@@ -6,6 +6,7 @@ import com.fantasticsource.mctools.gui.guielements.rect.GUIGradientRect;
 import com.fantasticsource.mctools.gui.guielements.rect.view.GUIRectTabView;
 import com.fantasticsource.tools.datastructures.Color;
 import net.minecraft.client.Minecraft;
+import org.lwjgl.input.Keyboard;
 
 public class LivingEntityGUI extends GUIScreen
 {
@@ -22,6 +23,7 @@ public class LivingEntityGUI extends GUIScreen
     {
         LivingEntityGUI.packet = packet;
         Minecraft.getMinecraft().displayGuiScreen(GUI);
+        Keyboard.enableRepeatEvents(true);
     }
 
     @Override
