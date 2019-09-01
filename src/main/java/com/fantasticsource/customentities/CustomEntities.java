@@ -3,9 +3,6 @@ package com.fantasticsource.customentities;
 import com.fantasticsource.customentities.blocksanditems.BlocksAndItems;
 import com.fantasticsource.customentities.blocksanditems.items.ItemEntityEditor;
 import com.fantasticsource.customentities.client.RenderCustomLiving;
-import com.fantasticsource.customentities.ecs.component.CIName;
-import com.fantasticsource.customentities.ecs.component.inheritable.CIDouble;
-import com.fantasticsource.customentities.ecs.entity.ECSEntity;
 import com.fantasticsource.customentities.server.EntityTemplates;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -47,23 +44,6 @@ public class CustomEntities
         Network.init();
 
         EntityTemplates.load();
-
-        ECSEntity entity1 = new ECSEntity(null);
-        entity1.put(new CIName(entity1).set("Beetle"));
-        entity1.put(new CIDouble(entity1).set("4"));
-        System.out.println(entity1.get(CIName.class).value);
-        System.out.println(entity1.get(CIName.class).getCalculatedComponent().value);
-        System.out.println(entity1.get(CIDouble.class).value);
-        System.out.println(entity1.get(CIDouble.class).getCalculatedComponent().value);
-        System.out.println();
-
-        ECSEntity entity2 = new ECSEntity(entity1);
-        entity2.put(new CIName(entity2).set("\"Elite \" + p"));
-        entity2.put(new CIDouble(entity2).set("p - 16 / 8 + p"));
-        System.out.println(entity2.get(CIName.class).value);
-        System.out.println(entity2.get(CIName.class).getCalculatedComponent().value);
-        System.out.println(entity2.get(CIDouble.class).value);
-        System.out.println(entity2.get(CIDouble.class).getCalculatedComponent().value);
     }
 
     @SubscribeEvent

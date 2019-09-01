@@ -105,6 +105,10 @@ getEntityBoundingBox() returns the normal collision bounding box generally used 
 
 
 
+Better text shadows, including on in-world name/title renders
+
+
+
 Low priority:
 Look into multiple hitboxes if a situation comes up where they'd be useful...
 ...could be good for worm-type enemies
