@@ -109,6 +109,10 @@ Better text shadows, including on in-world name/title renders
 
 
 
+AW dye support; define sets of dyes, and randomly choose one when creating the entity
+
+
+
 Low priority:
 Look into multiple hitboxes if a situation comes up where they'd be useful...
 ...could be good for worm-type enemies
