@@ -1,7 +1,7 @@
-package com.fantasticsource.customentities.ecs.component;
+package com.fantasticsource.customentities.ecs;
 
-import com.fantasticsource.customentities.ecs.component.inheritable.CIStringUTF8;
-import com.fantasticsource.customentities.ecs.entity.ECSEntity;
+import com.fantasticsource.customentities.ecs.inheritable.CIStringUTF8;
+import com.fantasticsource.mctools.ecs.ECSEntity;
 
 public class CIName extends CIStringUTF8
 {

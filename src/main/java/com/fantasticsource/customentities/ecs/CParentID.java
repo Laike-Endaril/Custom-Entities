@@ -1,6 +1,7 @@
-package com.fantasticsource.customentities.ecs.component;
+package com.fantasticsource.customentities.ecs;
 
-import com.fantasticsource.customentities.ecs.entity.ECSEntity;
+
+import com.fantasticsource.mctools.ecs.ECSEntity;
 
 import java.util.UUID;
 

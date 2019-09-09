@@ -1,7 +1,7 @@
-package com.fantasticsource.customentities.ecs.component.inheritable;
+package com.fantasticsource.customentities.ecs.inheritable;
 
-import com.fantasticsource.customentities.ecs.component.base.CStringUTF8;
-import com.fantasticsource.customentities.ecs.entity.ECSEntity;
+import com.fantasticsource.mctools.ecs.ECSEntity;
+import com.fantasticsource.mctools.ecs.component.CStringUTF8;
 import com.fantasticsource.tools.Tools;
 
 public class CIStringUTF8 extends InheritableComponent<CStringUTF8>

@@ -1,7 +1,8 @@
-package com.fantasticsource.customentities.ecs.component.inheritable;
+package com.fantasticsource.customentities.ecs.inheritable;
 
-import com.fantasticsource.customentities.ecs.component.base.CDouble;
-import com.fantasticsource.customentities.ecs.entity.ECSEntity;
+
+import com.fantasticsource.mctools.ecs.ECSEntity;
+import com.fantasticsource.mctools.ecs.component.CDouble;
 import com.fantasticsource.tools.Tools;
 
 import java.util.ArrayList;

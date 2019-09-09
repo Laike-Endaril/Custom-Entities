@@ -1,9 +1,10 @@
-package com.fantasticsource.customentities.ecs.component;
+package com.fantasticsource.customentities.ecs;
 
-import com.fantasticsource.customentities.ecs.component.base.CInt;
-import com.fantasticsource.customentities.ecs.component.base.CVec3D;
-import com.fantasticsource.customentities.ecs.component.base.Component;
-import com.fantasticsource.customentities.ecs.entity.ECSEntity;
+
+import com.fantasticsource.mctools.ecs.ECSEntity;
+import com.fantasticsource.mctools.ecs.component.CInt;
+import com.fantasticsource.mctools.ecs.component.CVec3D;
+import com.fantasticsource.mctools.ecs.component.Component;
 import io.netty.buffer.ByteBuf;
 
 import java.io.FileInputStream;
