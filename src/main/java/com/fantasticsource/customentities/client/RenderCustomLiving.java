@@ -1,7 +1,6 @@
 package com.fantasticsource.customentities.client;
 
 import com.fantasticsource.customentities.CustomLivingEntity;
-import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.resources.DefaultPlayerSkin;
@@ -13,7 +12,7 @@ public class RenderCustomLiving extends RenderBiped<CustomLivingEntity>
 
     public RenderCustomLiving(RenderManager rendermanagerIn)
     {
-        super(rendermanagerIn, new ModelPlayer(0, false), 0.5F);
+        super(rendermanagerIn, rendermanagerIn.getSkinMap().get("default").getMainModel(), 0.5f);
     }
 
     @Override

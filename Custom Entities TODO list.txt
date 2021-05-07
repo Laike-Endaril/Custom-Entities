@@ -1,26 +1,3 @@
-Link Components to GUI elements (the more complex of which would open submenus); would allow for a simple list of components
-
-
-
-ENTITY TEMPLATES
-Sets of entity data that do not belong to a particular entity or entities, but can be referred to as a parent in other entities to inherit values from
-Shared between worlds
-Stored in config folder
-
-PERSISTENT ENTITIES
-Each of these is a singular, respawning existence, and a reference to it from another mod persists through the death -> respawn cycle
-Persistent entities do not despawn
-Can reference a template as a parent, or not.  CANNOT reference another persistent entity as a parent
-Stored in a world-specific data folder (not dimension-specific storage).  Reference the world save folder of the world containing them (not the dim ID, since that can technically change)
-
-RANDOM SPAWNS
-Each of these consists of one or more zones and one or more entities to spawn in those zones, as well as weights and limits
-Each zone is a rectangular prism, for efficiency
-Entities spawned this way are non-persistent. They can despawn or die permanently, and they are disposed of in the vanilla MC way; they do not come back with the same entity object or UUID
-Stored in a world-specific data folder (not dimension-specific storage).  Reference the world save folder of the world containing them (not the dim ID, since that can technically change)
-
-
-
 Add text input filters...
 ...boolean
 ...math

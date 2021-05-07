@@ -2,11 +2,11 @@ package com.fantasticsource.customentities.client.gui;
 
 import com.fantasticsource.customentities.Network;
 import com.fantasticsource.mctools.gui.GUIScreen;
-import com.fantasticsource.mctools.gui.guielements.rect.text.GUILabeledTextInput;
-import com.fantasticsource.mctools.gui.guielements.rect.text.filter.FilterNotEmpty;
-import com.fantasticsource.mctools.gui.guielements.rect.view.GUIRectView;
+import com.fantasticsource.mctools.gui.element.text.GUILabeledTextInput;
+import com.fantasticsource.mctools.gui.element.text.filter.FilterNotEmpty;
+import com.fantasticsource.mctools.gui.element.view.GUIView;
 
-public class LivingEntityMainView extends GUIRectView
+public class LivingEntityMainView extends GUIView
 {
     public static GUILabeledTextInput nameElement;
 

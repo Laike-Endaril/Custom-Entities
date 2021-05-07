@@ -2,8 +2,8 @@ package com.fantasticsource.customentities.client.gui;
 
 import com.fantasticsource.customentities.Network;
 import com.fantasticsource.mctools.gui.GUIScreen;
-import com.fantasticsource.mctools.gui.guielements.rect.GUIGradientRect;
-import com.fantasticsource.mctools.gui.guielements.rect.view.GUIRectTabView;
+import com.fantasticsource.mctools.gui.element.other.GUIGradient;
+import com.fantasticsource.mctools.gui.element.view.GUITabView;
 import com.fantasticsource.tools.datastructures.Color;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
@@ -27,24 +27,30 @@ public class LivingEntityGUI extends GUIScreen
     }
 
     @Override
+    public String title()
+    {
+        return packet.name;
+    }
+
+    @Override
     public void init()
     {
         //Background
-        guiElements.add(new GUIGradientRect(this, 0, 0, 1, 1, T_BLACK, T_BLACK, T_BLACK, T_BLACK));
+        root.add(new GUIGradient(this, 0, 0, 1, 1, T_BLACK, T_BLACK, T_BLACK, T_BLACK));
 
         //Main tabview element
-        GUIRectTabView tabView = new GUIRectTabView(this, 0, 0, 1, 1, "File", "Main", "Inventory", "Spawn", "AI", "Physics & Render", "Potions & Attributes", "Events", "NBT");
-        guiElements.add(tabView);
+        GUITabView tabView = new GUITabView(this, 0, 0, 1, 1, "File", "Main", "Inventory", "Spawn", "AI", "Physics & Render", "Potions & Attributes", "Events", "NBT");
+        root.add(tabView);
 
         //Add custom views inside tab views
-        tabView.tabViews[0].add(new LivingEntityFileView(this, 0, 0, 1, 1, packet));
-        tabView.tabViews[1].add(new LivingEntityMainView(this, 0, 0, 1, 1, packet));
-        tabView.tabViews[2].add(new LivingEntityInventoryView(this, 0, 0, 1, 1, packet));
-        tabView.tabViews[3].add(new LivingEntitySpawnView(this, 0, 0, 1, 1, packet));
-        tabView.tabViews[4].add(new LivingEntityAIView(this, 0, 0, 1, 1, packet));
-        tabView.tabViews[5].add(new LivingEntityPhysicsRenderView(this, 0, 0, 1, 1, packet));
-        tabView.tabViews[6].add(new LivingEntityPotionsAttributesView(this, 0, 0, 1, 1, packet));
-        tabView.tabViews[7].add(new LivingEntityEventsView(this, 0, 0, 1, 1, packet));
-        tabView.tabViews[8].add(new LivingEntityNBTView(this, 0, 0, 1, 1, packet));
+        tabView.tabViews.get(0).add(new LivingEntityFileView(this, 0, 0, 1, 1, packet));
+        tabView.tabViews.get(1).add(new LivingEntityMainView(this, 0, 0, 1, 1, packet));
+        tabView.tabViews.get(2).add(new LivingEntityInventoryView(this, 0, 0, 1, 1, packet));
+        tabView.tabViews.get(3).add(new LivingEntitySpawnView(this, 0, 0, 1, 1, packet));
+        tabView.tabViews.get(4).add(new LivingEntityAIView(this, 0, 0, 1, 1, packet));
+        tabView.tabViews.get(5).add(new LivingEntityPhysicsRenderView(this, 0, 0, 1, 1, packet));
+        tabView.tabViews.get(6).add(new LivingEntityPotionsAttributesView(this, 0, 0, 1, 1, packet));
+        tabView.tabViews.get(7).add(new LivingEntityEventsView(this, 0, 0, 1, 1, packet));
+        tabView.tabViews.get(8).add(new LivingEntityNBTView(this, 0, 0, 1, 1, packet));
     }
 }
